@@ -17,7 +17,7 @@
         <class>com.example.assignment.model.entity.Productline</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/ecommerce"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:3306/ecommerce"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="jinyeeU"/>
 <!--            <property name="eclipselink.logging.level" value="SEVERE"/>-->
