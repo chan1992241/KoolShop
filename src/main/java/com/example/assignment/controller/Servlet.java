@@ -2,6 +2,7 @@ package com.example.assignment.controller;
 
 import com.example.assignment.model.entity.Order;
 import com.example.assignment.model.sessionbean.OrderSessionBeanLocal;
+import com.example.assignment.utils.CustomerLoginValidator;
 
 import javax.ejb.EJB;
 import javax.servlet.*;
@@ -19,8 +20,12 @@ public class Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        List<Order> allOrder = orderbean.getAllOrder();
 //        request.setAttribute("login_status", allOrder.get(0));
-        request.setAttribute("login_status", "Wrong customer number or phone number");
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        if (CustomerLoginValidator.isCustomerLogin(request)){
+            request.setAttribute("login_status", "successful");
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }else{
+            request.getRequestDispatcher("home.jsp").forward(request, response);
+        }
     }
 
     @Override
