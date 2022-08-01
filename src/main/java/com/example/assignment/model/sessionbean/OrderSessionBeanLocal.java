@@ -9,6 +9,6 @@ import java.util.List;
 @Local
 public interface OrderSessionBeanLocal {
     public List<Order> getAllOrder() throws EJBException;
-    public List<Object[]> findOrderByCustomerID(String id) throws EJBException;
-
+    public List<Order> findOrderByCustomerIDAndStatus(String id, String status) throws EJBException;
+    public List<Object[]> getOrderDetails(String orderID) throws EJBException;
 }

@@ -1,5 +1,7 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.example.assignment.model.entity.Order" %><%--
+<%@ page import="com.example.assignment.model.entity.Order" %>
+<%@ page import="com.example.assignment.model.entity.Orderdetail" %>
+<%@ page import="com.example.assignment.model.entity.Product" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 17/7/2022
@@ -25,8 +27,8 @@
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet">
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/animate.css">
@@ -60,16 +62,22 @@
                 <div class="col-md-11">
                     <div class="list-menu">
                         <ul>
-                            <li><a href="index.html">Shop</a></li>
-                            <li><a href="product-detail.html">Order</a></li>
-                            <li><a href="contact.html">Staff</a></li>
+                            <li><a href="Servlet">Shop</a></li>
+                            <li><a href="Customer_Order">Order</a></li>
+                            <li><a href="#">Staff</a></li>
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->
                 <div class="col-md-1">
                     <div class="list-menu">
                         <ul>
-                            <li><a href="index.html">Login</a></li>
+                            <li>
+                                <% if (request.getAttribute("login_status").equals("successful")) { %>
+                                <a href="Customer_Logout">logout</a>
+                                <% } else { %>
+                                <a href="Customer_Login">Login</a>
+                                <% } %>
+                            </li>
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->
@@ -79,30 +87,38 @@
 </header> <!-- /.site-header -->
 
 <div class="content-section">
-    <%--    TODO: Edit your part here--%>
     <div class="container">
         <div class="list-group">
-            <% List order = (List) request.getAttribute("customer_order"); %>
-            <% for (int i = 0; i < order.size(); i++){ %>
-                <% Object[] row = (Object[]) order.get(i); %>
-                <%= row %>>
-<%--                <a href="/?customer_number=<%= order.get(0).getCustomernumber()%>&order_number=<%= order.get(0).getId()%>" class="list-group-item list-group-item-action">--%>
-<%--                    <div class="d-flex justify-content-between">--%>
-<%--                        <h5 class="mb-1">Order Id: <%= order.get(i).getId()%></h5>--%>
-<%--                        <small>Order Status: <%= order.get(i).getStatus()%></small>--%>
-<%--                    </div>--%>
-<%--                    <small>Order Date: <%= order.get(i).getOrderdate()%></small>--%>
-<%--                    <p class="mb-1">item</p>--%>
-<%--                </a>--%>
-            <% } %>
+            <% List<Order> orders = (List<Order>) request.getAttribute("order"); %>
+            <% Order order = orders.get(0); %>
+            <form method="post">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Order ID: <%= order.getId() %></h2>
+                        <h5 class="card-subtitle mb-2 text-muted">Status: <%= order.getStatus() %></h5>
+                    <% List<Object[]> customer_orders = (List<Object[]>) request.getAttribute("order_details"); %>
+                        <% for (Object[] customer_order: customer_orders){ %>
+                            <% Product product = (Product) customer_order[0]; %>
+                            <% Orderdetail orderdetail = (Orderdetail) customer_order[1]; %>
+                            <a href="#" class="list-group-item list-group-item-action">
+                                <div class="d-flex justify-content-between">
+                                    <p class="mb-1">Product Name: <%= product.getProductname() %></p>
+                                    <div>
+                                        <p>Quantity: </p><input type="number" value="<%= orderdetail.getQuantityordered() %>"/>
+                                    </div>
+                                </div>
+                            </a>
+                    </a>
+                    <% } %>
+                        <button type="button" type="submit" class="btn btn-success mt-3">Update</button>
+                        <button type="button" type="submit"  class="btn btn-primary mt-3">Pay</button>
+                    </div>
+                </div>
+            </form>
         </div>
 
     </div> <!-- /.container -->
 </div> <!-- /.content-section -->
-
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script>
 <script src="js/plugins.js"></script>
 <script src="js/main.js"></script>
 

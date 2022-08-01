@@ -59,8 +59,8 @@
                 <div class="col-md-11">
                     <div class="list-menu">
                         <ul>
-                            <li><a href="home.jsp">Shop</a></li>
-                            <li><a href="#">Order</a></li>
+                            <li><a href="Servlet">Shop</a></li>
+                            <li><a href="Customer_Order">Order</a></li>
                             <li><a href="#">Staff</a></li>
                         </ul>
                     </div> <!-- /.list-menu -->
@@ -80,7 +80,7 @@
                                 <% } else { %>
                                 <a href="Customer_Login">Login</a>
                                 <% } %>
-                            </a></li>
+                            </li>
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->
