@@ -1,7 +1,8 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.example.assignment.model.entity.Order" %>
 <%@ page import="com.example.assignment.model.entity.Orderdetail" %>
-<%@ page import="com.example.assignment.model.entity.Product" %><%--
+<%@ page import="com.example.assignment.model.entity.Product" %>
+<%@ page import="java.math.BigDecimal" %><%--
   Created by IntelliJ IDEA.
   User: user
   Date: 17/7/2022
@@ -88,6 +89,14 @@
 
 <div class="content-section">
     <div class="container">
+        <div class="d-flex">
+            <form action="Customer_Order" method="get">
+                <button type="button" type="submit" class="btn btn-info mb-3">Current Order</button>
+            </form>
+            <form action="Customer_Order_History" method="get">
+                <button type="button" class="btn btn-secondary ms-3 mb-3">Order History</button>
+            </form>
+        </div>
         <div class="list-group">
             <% List<Order> orders = (List<Order>) request.getAttribute("order"); %>
             <% Order order = orders.get(0); %>
@@ -96,20 +105,37 @@
                     <div class="card-body">
                         <h2 class="card-title">Order ID: <%= order.getId() %></h2>
                         <h5 class="card-subtitle mb-2 text-muted">Status: <%= order.getStatus() %></h5>
-                    <% List<Object[]> customer_orders = (List<Object[]>) request.getAttribute("order_details"); %>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price Each</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total (RM)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                        <% List<Object[]> customer_orders = (List<Object[]>) request.getAttribute("order_details"); %>
+                        <% BigDecimal total = new BigDecimal(0); %>
                         <% for (Object[] customer_order: customer_orders){ %>
                             <% Product product = (Product) customer_order[0]; %>
                             <% Orderdetail orderdetail = (Orderdetail) customer_order[1]; %>
-                            <a href="#" class="list-group-item list-group-item-action">
-                                <div class="d-flex justify-content-between">
-                                    <p class="mb-1">Product Name: <%= product.getProductname() %></p>
-                                    <div>
-                                        <p>Quantity: </p><input type="number" value="<%= orderdetail.getQuantityordered() %>"/>
-                                    </div>
-                                </div>
-                            </a>
-                    </a>
-                    <% } %>
+                            <% total = total.add(orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())));%>
+                            <tr>
+                                <td><%= product.getProductname() %></td>
+                                <td>RM<%= orderdetail.getPriceeach() %></td>
+                                <td><input type="number" step="1" value="<%= orderdetail.getQuantityordered() %>"/></td>
+                                <td><%= orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())) %></td>
+                            </tr>
+                        <% } %>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td class="text-end">Total</td>
+                                <td><%= total%></td>
+                            </tr>
+                            </tbody>
+                        </table>
                         <button type="button" type="submit" class="btn btn-success mt-3">Update</button>
                         <button type="button" type="submit"  class="btn btn-primary mt-3">Pay</button>
                     </div>
