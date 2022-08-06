@@ -91,10 +91,14 @@
     <div class="container">
         <div class="d-flex">
             <form action="Customer_Order" method="get">
-                <button type="button" type="submit" class="btn btn-info mb-3">Current Order</button>
+                <button type="submit" type="submit" class="btn btn-info mb-3">Current Order</button>
             </form>
             <form action="Customer_Order_History" method="get">
-                <button type="button" class="btn btn-secondary ms-3 mb-3">Order History</button>
+                <input type="hidden" name="currentPage" value="1" />
+                <input type="hidden" name="recordsPerPage" value="10" />
+                <input type="hidden" name="direction" value="ASC" />
+                <input type="hidden" name="keyword" value="" />
+                <button type="submit" class="btn btn-secondary ms-3 mb-3">Order History</button>
             </form>
         </div>
         <div class="list-group">
