@@ -2,6 +2,7 @@ package com.example.assignment.model.sessionbean;
 
 import com.example.assignment.model.entity.Order;
 import com.example.assignment.model.entity.Orderdetail;
+import com.example.assignment.model.entity.Product;
 
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
@@ -165,6 +166,18 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
                     " where od.ordernumber = "+ ordernumber +" and od.productcode = '"+ productcode+"'");
             Orderdetail od = (Orderdetail) q.getSingleResult();
             em.remove(od);
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+    }
+
+    public void addProductToOrder(String productcode, String ordernumber, String quantityOrder ){
+        try{
+            Query productQ = em.createQuery("SELECT p from Product p where p.id = " + productcode);
+            Product product = (Product) productQ.getSingleResult();
+            Query q = em.createNativeQuery("INSERT INTO classicmodels.orderdetails (ordernumber, productcode, quantityordered, priceeach, orderlinenumber) VALUES\n" +
+                    "("+ordernumber+", '"+productcode+"', "+ quantityOrder +", "+ product.getBuyprice()+", 2);");
+            q.executeUpdate();
         }catch (Exception ex){
             System.out.println(ex);
         }
