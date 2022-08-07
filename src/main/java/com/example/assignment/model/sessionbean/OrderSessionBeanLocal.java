@@ -18,4 +18,5 @@ public interface OrderSessionBeanLocal {
     public Order findOrder(String orderID);
     public int getLargestID();
     public void updateOrder(String ordernumber, String orderdate, String requireddate, String shippeddate, String status, String comments, int customernumber);
+    public void updateProductOrderQuantity(String productcode, String ordernumber, int newQuantity);
 }

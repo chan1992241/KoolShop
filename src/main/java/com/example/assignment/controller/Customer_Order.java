@@ -1,6 +1,8 @@
 package com.example.assignment.controller;
 
 import com.example.assignment.model.entity.Order;
+import com.example.assignment.model.entity.Orderdetail;
+import com.example.assignment.model.entity.Product;
 import com.example.assignment.model.sessionbean.OrderSessionBeanLocal;
 import com.example.assignment.utils.CustomerLoginValidator;
 
@@ -12,6 +14,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name = "Customer_Order", value = "/Customer_Order")
@@ -44,6 +47,19 @@ public class Customer_Order extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String action = request.getParameter("action");
+        if (action.equals("update")){
+            String orderID = (String) request.getParameter("orderID");
+            List<Object[]> order_details = orderbean.getOrderDetails(orderID);
+            for (Object[] order_detail: order_details){
+                Product product = (Product) order_detail[0];
+                Orderdetail orderdetail = (Orderdetail) order_detail[1];
+                String newQuantity = request.getParameter(product.getId());
+                orderbean.updateProductOrderQuantity(product.getId(), orderID, Integer.parseInt(newQuantity));
+            }
+            doGet(request, response);
+        }else{
 
+        }
     }
 }

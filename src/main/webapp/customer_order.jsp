@@ -104,7 +104,7 @@
         <div class="list-group">
             <% List<Order> orders = (List<Order>) request.getAttribute("order"); %>
             <% Order order = orders.get(0); %>
-            <form method="post">
+            <form method="post" action="Customer_Order">
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title">Order ID: <%= order.getId() %></h2>
@@ -128,7 +128,7 @@
                             <tr>
                                 <td><%= product.getProductname() %></td>
                                 <td>RM<%= orderdetail.getPriceeach() %></td>
-                                <td><input type="number" step="1" value="<%= orderdetail.getQuantityordered() %>"/></td>
+                                <td><input type="number" step="1" name="<%= product.getId() %>" value="<%= orderdetail.getQuantityordered() %>"/></td>
                                 <td><%= orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())) %></td>
                             </tr>
                         <% } %>
@@ -140,6 +140,7 @@
                             </tr>
                             </tbody>
                         </table>
+                        <input type="hidden" name="orderID" value="<%= order.getId() %>" />
                         <button type="submit" class="btn btn-success mt-3" name="action" value="update">Update</button>
                         <button type="submit"  class="btn btn-primary mt-3" name="action" value="pay">Pay</button>
                     </div>

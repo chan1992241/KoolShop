@@ -104,21 +104,6 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
             String query = "INSERT INTO ecommerce.classicmodels.orders (ordernumber ,orderdate, requireddate, shippeddate, status, comments, customernumber) \n" +
             "VALUES ("+newOrderID+" ,'empty', 'empty', 'empty', 'wait', '', "+customer_number+");";
             em.createNativeQuery(query).executeUpdate();
-
-//            Order newOrder = new Order();
-//            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//            Date date = new Date();
-//            String currentDate = formatter.format(date);
-//            int customer_number_int = Integer.parseInt(customer_number);
-//            int newOrderID = getLargestID() + 1;
-//            newOrder.setId(newOrderID);
-//            newOrder.setOrderdate(currentDate);
-//            newOrder.setCustomernumber(customer_number_int);
-//            newOrder.setComments("");
-//            newOrder.setRequireddate(currentDate);
-//            newOrder.setShippeddate(currentDate);
-//            newOrder.setStatus("wait");
-//            em.merge(newOrder);
         }catch (Exception e){
             System.out.println(e);
         }
@@ -154,5 +139,16 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
     public Order findOrder(String orderID){
         Query q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.orders WHERE ordernumber = " + orderID);
         return (Order) q.getSingleResult();
+    }
+
+    public void updateProductOrderQuantity(String productcode, String ordernumber, int newQuantity){
+        try{
+            Query q = em.createQuery("update Orderdetail SET quantityordered = " + newQuantity + " WHERE ordernumber = "+ ordernumber +" " +
+                    "AND productcode = '"+ productcode+"'");
+            q.executeUpdate();
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+
     }
 }
