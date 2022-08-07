@@ -42,13 +42,17 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
         Query q = null;
         int start = 0;
         direction = " " + direction;
-        if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number + " order by ordernumber" + direction , Order.class);
-        }else{
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.orders WHERE status != 'wait' AND concat(ordernumber,orderdate,requireddate,shippeddate,status) LIKE '%" + keyword + "%' AND customernumber = " + customer_number + " order by id" + direction,Order.class);
-            start = currentPage * recordsPerPage - recordsPerPage;
-            q.setParameter(1, "%" + keyword + "%");
+        try{
+            if (keyword.isEmpty()) {
+                q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number + " order by ordernumber " + direction , Order.class);
+            }else{
+                q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.orders WHERE status != 'wait' AND concat(ordernumber,orderdate,requireddate,shippeddate,status) LIKE '%" + keyword + "%' AND customernumber = " + customer_number + " order by ordernumber " + direction,Order.class);
+//            q.setParameter(1, "%" + keyword + "%");
+            }
+        }catch (Exception ex){
+            System.out.println(ex);
         }
+        start = currentPage * recordsPerPage - recordsPerPage;
         List<Order> order = q.setFirstResult(start).setMaxResults(recordsPerPage).getResultList();
         return order;
     }
@@ -119,14 +123,6 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
             System.out.println(e);
         }
     }
-    @Override
-    public void updateOrder(String orderID){
-        return;
-    };
-    @Override
-    public Order findOrder(String orderID){
-        return null;
-    };
 
     @Override
     public int getLargestID(){
@@ -140,4 +136,23 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
         }
         return i;
     };
+    @Override
+    public void updateOrder(String ordernumber, String orderdate, String requireddate, String shippeddate, String status, String comments, int customernumber ){
+        try{
+            Order order = (Order) findOrder(ordernumber);
+            order.setOrderdate(orderdate);
+            order.setRequireddate(requireddate);
+            order.setShippeddate(shippeddate);
+            order.setStatus(status);
+            order.setComments(comments);
+            em.merge(order);
+        }catch (Exception e){
+            System.out.println(e);
+        }
+    };
+    @Override
+    public Order findOrder(String orderID){
+        Query q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.orders WHERE ordernumber = " + orderID);
+        return (Order) q.getSingleResult();
+    }
 }

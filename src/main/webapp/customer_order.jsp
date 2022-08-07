@@ -95,7 +95,7 @@
             </form>
             <form action="Customer_Order_History" method="get">
                 <input type="hidden" name="currentPage" value="1" />
-                <input type="hidden" name="recordsPerPage" value="10" />
+                <input type="hidden" name="recordsPerPage" value="3" />
                 <input type="hidden" name="direction" value="ASC" />
                 <input type="hidden" name="keyword" value="" />
                 <button type="submit" class="btn btn-secondary ms-3 mb-3">Order History</button>
@@ -140,8 +140,8 @@
                             </tr>
                             </tbody>
                         </table>
-                        <button type="button" type="submit" class="btn btn-success mt-3">Update</button>
-                        <button type="button" type="submit"  class="btn btn-primary mt-3">Pay</button>
+                        <button type="submit" class="btn btn-success mt-3" name="action" value="update">Update</button>
+                        <button type="submit"  class="btn btn-primary mt-3" name="action" value="pay">Pay</button>
                     </div>
                 </div>
             </form>

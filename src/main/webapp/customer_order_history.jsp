@@ -108,10 +108,40 @@
             </form>
             <form action="Customer_Order_History" method="get">
                 <input type="hidden" name="currentPage" value="1" />
-                <input type="hidden" name="recordsPerPage" value="10" />
+                <input type="hidden" name="recordsPerPage" value="3" />
                 <input type="hidden" name="direction" value="ASC" />
                 <input type="hidden" name="keyword" value="" />
                 <button type="submit" class="btn btn-secondary ms-3 mb-3">Order History</button>
+            </form>
+        </div>
+        <div class="mb-3">
+            <%
+                int currentPage = (int) request.getAttribute("currentPage");
+                int recordsPerPage = (int) request.getAttribute("recordsPerPage");
+                int nOfPages = (int) request.getAttribute("nOfPages");
+                String keyword = (String) request.getAttribute("keyword");
+                String direction = (String) request.getAttribute("direction");
+            %>
+            <form action="Customer_Order_History" method="get" class="d-flex mb-3">
+                <select class="form-control" id="direction" name="direction">
+                    <option value="ASC">ascending</option>
+                    <option value="DESC">descending</option>
+                </select>
+                <button class="btn aqua-gradient btn-rounded btn-sm my-0 btn btn-info"
+                        type="submit">Sorting</button>
+                <input type="hidden" name="currentPage" value="<%=currentPage%>" />
+                <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
+                <input type="hidden" name="keyword" value="<%=keyword%>" />
+            </form>
+            <form class="d-flex"
+                  action="Customer_Order_History" method="get">
+                <input class="form-control mr-sm-2" type="text" aria-label="Search"
+                       name="keyword" />
+                <button class="btn aqua-gradient btn-rounded btn-sm my-0 btn btn-info"
+                        type="submit">Search</button>
+                <input type="hidden" name="currentPage" value="<%=currentPage%>" />
+                <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
+                <input type="hidden" name="direction" value="<%=direction%>" />
             </form>
         </div>
         <div class="list-group">
@@ -172,7 +202,25 @@
             <% } %>
 
         </div>
-
+        <nav aria-label="Navigation for staffs">
+            <ul class="pagination">
+                <% if (currentPage != 1 && nOfPages != 0) { %>
+                    <li class="page-item">
+                        <a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=1&keyword=<%=keyword%>&direction=<%=direction%>">First</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=currentPage - 1%>&keyword=<%=keyword%>&direction=<%=direction%>">Previous</a>
+                    </li>
+                <% } %>
+                <% if (currentPage < nOfPages) { %>
+                        <li class="page-item"><a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=currentPage + 1%>&keyword=<%=keyword%>&direction=<%=direction%>">Next</a></li>
+                        <li class="page-item"><a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=nOfPages%>&keyword=<%=keyword%>&direction=<%=direction%>">Last</a></li>
+                <% } %>
+            </ul>
+        </nav>
+        <% if (nOfPages != 0) { %>
+                <p class="pageref"><%= currentPage %> of <%= nOfPages %></p>
+        <% } %>
     </div> <!-- /.container -->
 </div> <!-- /.content-section -->
 <script src="js/plugins.js"></script>

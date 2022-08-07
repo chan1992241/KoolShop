@@ -26,13 +26,13 @@ public class Customer_Order_History extends HttpServlet {
             //Get all parameter
             HttpSession session=request.getSession();
             int nOfPages= 0;
-            int currentPage = Integer.valueOf(request.getParameter("currentPage"));
-            int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
+            int currentPage = Integer.valueOf(request.getParameter("currentPage").trim());
+            int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage").trim());
             String keyword = request.getParameter("keyword");
             String direction = request.getParameter("direction");
             String customer_number = (String) session.getAttribute("customer_number");
             try {
-                int rows = orderbean.getNumberOfRows(customer_number, "Shipped");
+                int rows = orderbean.getNumberOfRows(customer_number, keyword);
                 nOfPages = rows / recordsPerPage;
                 if (rows % recordsPerPage != 0) {
                     nOfPages++;
@@ -43,11 +43,17 @@ public class Customer_Order_History extends HttpServlet {
                 List<Order> orders = orderbean.getOrderHistory(customer_number ,currentPage, recordsPerPage, keyword, direction);
                 request.setAttribute("orders", orders);
             } catch (EJBException ex) {
+                System.out.println(ex);
             }
 
 //            List<Order> order = orderbean.getOrderHistory(customer_number, 1, 70, keyword, "ASC");
             List<Object[]> order_details = orderbean.getOrderHistoryDetails(customer_number,1, 70, "ASC", keyword);
 //            request.setAttribute("order", order);
+            request.setAttribute("currentPage", currentPage);
+            request.setAttribute("recordsPerPage", recordsPerPage);
+            request.setAttribute("nOfPages", nOfPages);
+            request.setAttribute("keyword", keyword);
+            request.setAttribute("direction", direction);
             request.setAttribute("order_details", order_details);
             request.setAttribute("login_status", "successful");
             request.getRequestDispatcher("customer_order_history.jsp").forward(request, response);

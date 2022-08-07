@@ -15,7 +15,7 @@ public interface OrderSessionBeanLocal {
     public List<Object[]> getOrderHistoryDetails(String customer_number, int currentPage, int recordsPerPage, String direction, String keyword);
     public int getNumberOfRows(String customer_number ,String keyword) throws EJBException;
     public void addOrder(String customer_number);
-    public void updateOrder(String orderID);
     public Order findOrder(String orderID);
     public int getLargestID();
+    public void updateOrder(String ordernumber, String orderdate, String requireddate, String shippeddate, String status, String comments, int customernumber);
 }
