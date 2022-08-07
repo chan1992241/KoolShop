@@ -26,8 +26,12 @@ public class Customer_Order extends HttpServlet {
             HttpSession session=request.getSession();
             String customer_number = (String) session.getAttribute("customer_number");
             List<Order> order = orderbean.findOrderByCustomerIDAndStatus(customer_number, "wait");
-            int orderID = order.get(0).getId();
-            List<Object[]> order_details = orderbean.getOrderDetails(String.valueOf(orderID));
+            if (order.size() == 0){
+                orderbean.addOrder(customer_number);
+                order = orderbean.findOrderByCustomerIDAndStatus(customer_number, "wait");
+            }
+            String orderID = order.get(0).getId().toString();
+            List<Object[]> order_details = orderbean.getOrderDetails(orderID);
             request.setAttribute("order", order);
             request.setAttribute("order_details", order_details);
             request.setAttribute("login_status", "successful");
