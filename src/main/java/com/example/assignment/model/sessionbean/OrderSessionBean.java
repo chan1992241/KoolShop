@@ -137,7 +137,12 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
     };
     @Override
     public Order findOrder(String orderID){
-        Query q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.orders WHERE ordernumber = " + orderID);
+        Query q = null;
+        try{
+            q = em.createQuery("SELECT o FROM Order o WHERE ordernumber = " + orderID);
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
         return (Order) q.getSingleResult();
     }
 

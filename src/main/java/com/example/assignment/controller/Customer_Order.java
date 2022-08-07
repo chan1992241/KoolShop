@@ -48,18 +48,25 @@ public class Customer_Order extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
+        String orderID = (String) request.getParameter("orderID");
         if (action.equals("update")){
-            String orderID = (String) request.getParameter("orderID");
             List<Object[]> order_details = orderbean.getOrderDetails(orderID);
             for (Object[] order_detail: order_details){
                 Product product = (Product) order_detail[0];
-                Orderdetail orderdetail = (Orderdetail) order_detail[1];
                 String newQuantity = request.getParameter(product.getId());
                 orderbean.updateProductOrderQuantity(product.getId(), orderID, Integer.parseInt(newQuantity));
             }
             doGet(request, response);
         }else{
-
+            Order order = orderbean.findOrder(orderID);
+            orderbean.updateOrder(order.getId().toString(),
+                    order.getOrderdate(),
+                    order.getRequireddate(),
+                    order.getShippeddate(),
+                    "In Process",
+                    order.getComments(),
+                    order.getCustomernumber());
+            doGet(request, response);
         }
     }
 }
