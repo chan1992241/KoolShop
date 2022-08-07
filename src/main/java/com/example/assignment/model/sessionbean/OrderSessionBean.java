@@ -1,6 +1,8 @@
 package com.example.assignment.model.sessionbean;
 
 import com.example.assignment.model.entity.Order;
+import com.example.assignment.model.entity.Orderdetail;
+
 import javax.ejb.EJBException;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -155,5 +157,16 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
             System.out.println(ex);
         }
 
+    }
+
+    public void deleteProductFromOrder(String productcode, String ordernumber){
+        try{
+            Query q = em.createQuery("SELECT od from Orderdetail od" +
+                    " where od.ordernumber = "+ ordernumber +" and od.productcode = '"+ productcode+"'");
+            Orderdetail od = (Orderdetail) q.getSingleResult();
+            em.remove(od);
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
     }
 }

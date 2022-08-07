@@ -116,6 +116,7 @@
                                 <th scope="col">Price Each</th>
                                 <th scope="col">Quantity</th>
                                 <th scope="col">Total (RM)</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -130,6 +131,7 @@
                                 <td>RM<%= orderdetail.getPriceeach() %></td>
                                 <td><input type="number" step="1" name="<%= product.getId() %>" value="<%= orderdetail.getQuantityordered() %>"/></td>
                                 <td><%= orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())) %></td>
+                                <td><button type="submit" name="deleteProduct" value="<%=product.getId()%>">Delete</button></td>
                             </tr>
                         <% } %>
                             <tr>
@@ -137,6 +139,7 @@
                                 <td></td>
                                 <td class="text-end">Total</td>
                                 <td><%= total%></td>
+                                <td></td>
                             </tr>
                             </tbody>
                         </table>

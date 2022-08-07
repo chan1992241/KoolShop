@@ -49,6 +49,11 @@ public class Customer_Order extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getParameter("action");
         String orderID = (String) request.getParameter("orderID");
+        String productCodeDelete = request.getParameter("deleteProduct");
+        if (productCodeDelete != null){
+            orderbean.deleteProductFromOrder(productCodeDelete, orderID);
+            doGet(request, response);
+        }
         if (action.equals("update")){
             List<Object[]> order_details = orderbean.getOrderDetails(orderID);
             for (Object[] order_detail: order_details){
@@ -57,7 +62,7 @@ public class Customer_Order extends HttpServlet {
                 orderbean.updateProductOrderQuantity(product.getId(), orderID, Integer.parseInt(newQuantity));
             }
             doGet(request, response);
-        }else{
+        } else {
             Order order = orderbean.findOrder(orderID);
             orderbean.updateOrder(order.getId().toString(),
                     order.getOrderdate(),
