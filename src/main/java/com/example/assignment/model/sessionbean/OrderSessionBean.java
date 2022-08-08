@@ -70,7 +70,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
                         "AND od.ordernumber = o.id " +
                         "AND status != 'wait' AND o.customernumber = " + customer_number +
                         " order by od.ordernumber " + direction +"");
-                order_details = q.setFirstResult(start).setMaxResults(recordsPerPage).getResultList();
+                order_details = q.getResultList();
             }else{
                 Query q = em.createQuery("select p, od, o From Orderdetail od, Product p, Order o " +
                         "WHERE od.productcode = p.id " +
@@ -78,7 +78,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
                         "AND o.customernumber = " + customer_number +
                         " AND status != 'wait' AND concat(o.id, o.orderdate, o.requireddate ,o.shippeddate,o.status) LIKE '%" + keyword + "%' " +
                         "order by od.ordernumber " + direction +"");
-                order_details = q.setFirstResult(start).setMaxResults(recordsPerPage).getResultList();
+                order_details = q.getResultList();
             }
         }catch (Exception e){
             System.out.println(e);
