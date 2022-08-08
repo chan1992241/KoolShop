@@ -63,6 +63,15 @@ public class Staff_Order extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        String action = request.getParameter("action");
+        if (action.equals("update")){
+            String comment = request.getParameter("comment");
+            String status = request.getParameter("status");
+            String orderID = request.getParameter("orderID");
+            Order found_order = (Order) orderbean.findOrder(orderID);
+            orderbean.updateOrder(orderID, found_order.getOrderdate(), found_order.getRequireddate(), found_order.getShippeddate(),
+                    status, comment, found_order.getCustomernumber());
+            doGet(request, response);
+        }
     }
 }

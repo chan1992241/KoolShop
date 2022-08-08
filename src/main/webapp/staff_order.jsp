@@ -148,12 +148,22 @@
             <% List<Order> orders = (List<Order>) request.getAttribute("orders"); %>
             <% List<Object[]> customer_orders = (List<Object[]>) request.getAttribute("order_details"); %>
             <% for (Order order: orders){ %>
-            <form method="post" class="mb-3">
+            <form method="post" class="mb-3" action="Staff_Order">
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title">Order ID: <%= order.getId() %>
                         </h2>
                         <h5 class="card-subtitle mb-2 text-muted">Status: <%= order.getStatus() %>
+                            <select class="form-select" aria-label="Default select example" name="status">
+                                <% String[] status = {"Cancelled", "Disputed", "In Process", "On Hold", "Resolved", "Shipped"}; %>
+                                <% for (String s: status){ %>
+                                    <% if (s.equals(order.getStatus())){%>
+                                        <option selected><%=s%></option>
+                                    <% }else{ %>
+                                        <option><%=s%></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
                         </h5>
                         <table class="table">
                             <thead>
@@ -192,8 +202,22 @@
                                 <td><%= total%>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="4" rowspan="2">
+                                    <div class="form-floating" style="width: fit-content">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea" name="comment"><%= order.getComments() %></textarea>
+                                        <label for="floatingTextarea">Comments</label>
+                                    </div>
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
+                        <input type="hidden" name="orderID" value="<%= order.getId()%>" />
+                        <input type="hidden" name="currentPage" value="<%=currentPage%>" />
+                        <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
+                        <input type="hidden" name="direction" value="<%=direction%>" />
+                        <input type="hidden" name="keyword" value="<%=keyword%>" />
+                        <button type="submit" class="btn btn-success mt-3" name="action" value="update">Update</button>
                     </div>
                 </div>
             </form>
