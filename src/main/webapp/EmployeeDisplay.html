@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Display</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <link rel="stylesheet" href="css/normalize.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/templatemo-misc.css">
+    <link rel="stylesheet" href="css/templatemo-style.css">
+
+    <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
+</head>
+
+<body class="m-3">
+
+<header class="site-header">
+    <div class="main-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 col-sm-6 col-xs-8">
+                    <div class="logo">
+                        <h1><a href="index.jsp">Kool Store</a></h1>
+                    </div> <!-- /.logo -->
+                </div> <!-- /.col-md-4 -->
+            </div> <!-- /.row -->
+        </div> <!-- /.container -->
+    </div> <!-- /.main-header -->
+    <div class="main-nav">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-11">
+                    <div class="list-menu">
+                        <ul>
+                            <li><a href="employee_home.html">Home</a></li>
+                            <li><a href="#">Products</a></li>
+                            <li><a href="#">Orders</a></li>
+                            <li><a href="#">Customers</a></li>
+                            <li><a href="EmployeeDisplay.html">Employees</a></li>
+                            <li><a href="OfficeDisplay.html">Offices</a></li>
+                        </ul>
+                    </div> <!-- /.list-menu -->
+                </div> <!-- /.col-md-6 -->
+                <div class="col-md-1">
+                    <div class="list-menu">
+                        <ul>
+                            <li>
+                                <a href="Customer_Logout">logout</a>
+                            </li>
+                        </ul>
+                    </div> <!-- /.list-menu -->
+                </div> <!-- /.col-md-6 -->
+            </div> <!-- /.row -->
+        </div> <!-- /.container -->
+    </div> <!-- /.main-nav -->
+</header> <!-- /.site-header -->
+<br><br>
+<h2>Select Number of Employee Record Per Page</h2>
+<form action="EmployeePagination">
+    <input type="hidden" name="currentPage" value="1">
+    <input type="hidden" name="keyword" value="">
+    <!--    <input type="hidden" name="direction" value="ASC">-->
+    <div class="form-group col-md-4">
+        <label for="records">Select records per page:</label> <select
+            class="form-control" id="records" name="recordsPerPage">
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+        <option value="20">20</option>
+    </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<br><br>
+</body>
+</html>
