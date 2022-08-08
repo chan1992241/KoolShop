@@ -24,6 +24,7 @@ public class Servlet extends HttpServlet {
             request.setAttribute("login_status", "successful");
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }else{
+            request.setAttribute("login_status", "unsuccessful");
             request.getRequestDispatcher("home.jsp").forward(request, response);
         }
     }
