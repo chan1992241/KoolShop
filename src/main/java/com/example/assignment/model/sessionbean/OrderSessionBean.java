@@ -182,4 +182,64 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
             System.out.println(ex);
         }
     }
+
+    public List<Object[]> findOrderDetailsByStaff(String staff_no){
+        List<Object[]> result = null;
+        try{
+            Query q = em.createQuery("select p, od, o, c, e from Product p, Orderdetail od, Order o,\n" +
+                    "              Customer c, Employee e\n" +
+                    "WHERE p.id = od.productcode AND od.ordernumber = o.id\n" +
+                    "AND o.customernumber = c.id AND c.salesrepemployeenumber = e.id\n" +
+                    "AND o.status != 'wait' AND e.id = "+ staff_no+ "");
+            result = q.getResultList();
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+        return result;
+    }
+    public List<Order> findOrderByStaff(String staff_no, int currentPage, int recordsPerPage, String keyword, String direction){
+        List<Order> result = null;
+        Query q = null;
+        direction = " " + direction;
+        try{
+            if (keyword.isEmpty()){
+                q = em.createQuery("select o from Order o, Customer c, Employee e " +
+                        "WHERE o.customernumber = c.id AND c.salesrepemployeenumber = e.id" +
+                        " AND o.status != 'wait' AND e.id = " + staff_no + " order by o.id " + direction);
+            }else{
+                q = em.createQuery("select o from Order o, Customer c, Employee e " +
+                        "WHERE o.customernumber = c.id AND c.salesrepemployeenumber = e.id" +
+                        " AND o.status != 'wait' AND e.id = " + staff_no + " AND" +
+                        " concat(o.id,o.orderdate,o.requireddate,o.shippeddate,o.status) LIKE '%" + keyword + "%'" +
+                        " order by o.id " + direction);
+            }
+            int start = currentPage * recordsPerPage - recordsPerPage;
+            result = (List<Order>) q.setFirstResult(start).setMaxResults(recordsPerPage).getResultList();
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+        return result;
+    }
+    @Override
+    public int getNumberOfRowsStaffOrder(String staff_no ,String keyword) throws EJBException {
+        Query q = null;
+        Long results = new Long("0");
+//        q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.orders WHERE customernumber = " + customer_number);
+        try{
+            if (keyword.isEmpty()) {
+                q = em.createQuery("select count(*) from Order o, Customer c, Employee e " +
+                        "WHERE o.customernumber = c.id AND c.salesrepemployeenumber = e.id" +
+                        " AND o.status != 'wait' AND e.id = " + staff_no);
+            } else {
+                q = em.createQuery("select count(*) from Order o, Customer c, Employee e " +
+                        "WHERE o.customernumber = c.id AND c.salesrepemployeenumber = e.id" +
+                        " AND o.status != 'wait' AND e.id = " + staff_no + " AND concat(o.id,o.orderdate,o.requireddate,o.shippeddate,o.status) LIKE '%" + keyword + "%'");
+            }
+            results = (Long) q.getSingleResult();
+        }catch (Exception ex){
+            System.out.println(ex);
+        }
+        int i = results.intValue();
+        return i;
+    }
 }

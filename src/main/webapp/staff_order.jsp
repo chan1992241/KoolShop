@@ -102,18 +102,18 @@
 
 <div class="content-section">
     <div class="container">
-        <div class="d-flex">
-            <form action="Customer_Order" method="get">
-                <button type="submit" type="submit" class="btn btn-info mb-3">Current Order</button>
-            </form>
-            <form action="Customer_Order_History" method="get">
-                <input type="hidden" name="currentPage" value="1" />
-                <input type="hidden" name="recordsPerPage" value="3" />
-                <input type="hidden" name="direction" value="ASC" />
-                <input type="hidden" name="keyword" value="" />
-                <button type="submit" class="btn btn-secondary ms-3 mb-3">Order History</button>
-            </form>
-        </div>
+<%--        <div class="d-flex">--%>
+<%--            <form action="Customer_Order" method="get">--%>
+<%--                <button type="submit" type="submit" class="btn btn-info mb-3">Current Order</button>--%>
+<%--            </form>--%>
+<%--            <form action="Customer_Order_History" method="get">--%>
+<%--                <input type="hidden" name="currentPage" value="1" />--%>
+<%--                <input type="hidden" name="recordsPerPage" value="3" />--%>
+<%--                <input type="hidden" name="direction" value="ASC" />--%>
+<%--                <input type="hidden" name="keyword" value="" />--%>
+<%--                <button type="submit" class="btn btn-secondary ms-3 mb-3">Order History</button>--%>
+<%--            </form>--%>
+<%--        </div>--%>
         <div class="mb-3">
             <%
                 int currentPage = (int) request.getAttribute("currentPage");
@@ -122,7 +122,7 @@
                 String keyword = (String) request.getAttribute("keyword");
                 String direction = (String) request.getAttribute("direction");
             %>
-            <form action="Customer_Order_History" method="get" class="d-flex mb-3">
+            <form action="Staff_Order" method="get" class="d-flex mb-3">
                 <select class="form-control" id="direction" name="direction">
                     <option value="ASC">ascending</option>
                     <option value="DESC">descending</option>
@@ -134,7 +134,7 @@
                 <input type="hidden" name="keyword" value="<%=keyword%>" />
             </form>
             <form class="d-flex"
-                  action="Customer_Order_History" method="get">
+                  action="Staff_Order" method="get">
                 <input class="form-control mr-sm-2" type="text" aria-label="Search"
                        name="keyword" />
                 <button class="btn aqua-gradient btn-rounded btn-sm my-0 btn btn-info"
@@ -148,78 +148,76 @@
             <% List<Order> orders = (List<Order>) request.getAttribute("orders"); %>
             <% List<Object[]> customer_orders = (List<Object[]>) request.getAttribute("order_details"); %>
             <% for (Order order: orders){ %>
-                <form method="post" class="mb-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <h2 class="card-title">Order ID: <%= order.getId() %>
-                            </h2>
-                            <h5 class="card-subtitle mb-2 text-muted">Status: <%= order.getStatus() %>
-                            </h5>
-                            <table class="table">
-                                <thead>
-                                <tr>
-                                    <th scope="col">Product Name</th>
-                                    <th scope="col">Price Each</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Total (RM)</th>
-                                </tr>
-                                </thead>
-                                <tbody>
+            <form method="post" class="mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="card-title">Order ID: <%= order.getId() %>
+                        </h2>
+                        <h5 class="card-subtitle mb-2 text-muted">Status: <%= order.getStatus() %>
+                        </h5>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th scope="col">Product Name</th>
+                                <th scope="col">Price Each</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Total (RM)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                                <% BigDecimal total = new BigDecimal(0); %>
-                                <% for (Object[] customer_order : customer_orders) { %>
-                                    <% Product product = (Product) customer_order[0]; %>
-                                    <% Orderdetail orderdetail = (Orderdetail) customer_order[1]; %>
-                                    <% int orderDetailOrderNo = orderdetail.getOrdernumber().getId(); %>
-                                    <% int orderID = order.getId(); %>
-                                    <% if (orderDetailOrderNo == orderID){ %>
-                                            <% total = total.add(orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())));%>
-                                            <tr>
-                                                <td><%= product.getProductname() %>
-                                                </td>
-                                                <td>RM<%= orderdetail.getPriceeach() %>
-                                                </td>
-                                                <td><input type="number" step="1" value="<%= orderdetail.getQuantityordered() %>"/></td>
-                                                <td><%= orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())) %>
-                                                </td>
-                                            </tr>
-                                        <% }%>
-                                    <% } %>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td class="text-end">Total</td>
-                                    <td><%= total%>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-<%--                            <button type="button" type="submit" class="btn btn-success mt-3">Update</button>--%>
-<%--                            <button type="button" type="submit" class="btn btn-primary mt-3">Pay</button>--%>
-                        </div>
+                            <% BigDecimal total = new BigDecimal(0); %>
+                            <% for (Object[] customer_order : customer_orders) { %>
+                            <% Product product = (Product) customer_order[0]; %>
+                            <% Orderdetail orderdetail = (Orderdetail) customer_order[1]; %>
+                            <% int orderDetailOrderNo = orderdetail.getOrdernumber().getId(); %>
+                            <% int orderID = order.getId(); %>
+                            <% if (orderDetailOrderNo == orderID){ %>
+                            <% total = total.add(orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())));%>
+                            <tr>
+                                <td><%= product.getProductname() %>
+                                </td>
+                                <td>RM<%= orderdetail.getPriceeach() %>
+                                </td>
+                                <td><input type="number" step="1" value="<%= orderdetail.getQuantityordered() %>"/></td>
+                                <td><%= orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())) %>
+                                </td>
+                            </tr>
+                            <% }%>
+                            <% } %>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td class="text-end">Total</td>
+                                <td><%= total%>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </form>
+                </div>
+            </form>
             <% } %>
 
         </div>
         <nav aria-label="Navigation for staffs">
             <ul class="pagination">
                 <% if (currentPage != 1 && nOfPages != 0) { %>
-                    <li class="page-item">
-                        <a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=1&keyword=<%=keyword%>&direction=<%=direction%>">First</a>
-                    </li>
-                    <li class="page-item">
-                        <a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=currentPage - 1%>&keyword=<%=keyword%>&direction=<%=direction%>">Previous</a>
-                    </li>
+                <li class="page-item">
+                    <a class="page-link" href="Staff_Order?recordsPerPage=<%=recordsPerPage %>&currentPage=1&keyword=<%=keyword%>&direction=<%=direction%>">First</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="Staff_Order?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=currentPage - 1%>&keyword=<%=keyword%>&direction=<%=direction%>">Previous</a>
+                </li>
                 <% } %>
                 <% if (currentPage < nOfPages) { %>
-                        <li class="page-item"><a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=currentPage + 1%>&keyword=<%=keyword%>&direction=<%=direction%>">Next</a></li>
-                        <li class="page-item"><a class="page-link" href="Customer_Order_History?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=nOfPages%>&keyword=<%=keyword%>&direction=<%=direction%>">Last</a></li>
+                <li class="page-item"><a class="page-link" href="Staff_Order?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=currentPage + 1%>&keyword=<%=keyword%>&direction=<%=direction%>">Next</a></li>
+                <li class="page-item"><a class="page-link" href="Staff_Order?recordsPerPage=<%=recordsPerPage %>&currentPage=<%=nOfPages%>&keyword=<%=keyword%>&direction=<%=direction%>">Last</a></li>
                 <% } %>
             </ul>
         </nav>
         <% if (nOfPages != 0) { %>
-                <p class="pageref"><%= currentPage %> of <%= nOfPages %></p>
+        <p class="pageref"><%= currentPage %> of <%= nOfPages %></p>
         <% } %>
     </div> <!-- /.container -->
 </div> <!-- /.content-section -->
@@ -229,4 +227,5 @@
 
 </body>
 </html>
+
 

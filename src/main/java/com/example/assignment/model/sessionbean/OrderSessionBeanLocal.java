@@ -21,4 +21,7 @@ public interface OrderSessionBeanLocal {
     public void updateProductOrderQuantity(String productcode, String ordernumber, int newQuantity);
     public void deleteProductFromOrder(String productcode, String ordernumber);
     public void addProductToOrder(String productcode, String ordernumber, String quantityOrder );
+    public List<Object[]> findOrderDetailsByStaff(String staff_no);
+    public List<Order> findOrderByStaff(String staff_no, int currentPage, int recordsPerPage, String keyword, String direction);
+    public int getNumberOfRowsStaffOrder(String staff_no ,String keyword) throws EJBException;
 }
