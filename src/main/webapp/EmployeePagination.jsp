@@ -105,7 +105,7 @@
     int recordsPerPage = (int) request.getAttribute("recordsPerPage");
     int nOfPages = (int) request.getAttribute("nOfPages");
     String keyword = (String) request.getAttribute("keyword");
-    //String direction = (String) request.getAttribute("direction");
+    String direction = (String) request.getAttribute("direction");
 %>
 
 <form class="form-inline md-form mr-auto mb-4" action="EmployeePagination" method="get">
@@ -115,11 +115,11 @@
             type="submit">Search</button>
     <input type="hidden" name="currentPage" value="<%=currentPage%>" />
     <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
-    <%--    <input type="hidden" name="direction" value="<%=direction%>" />--%>
+    <input type="hidden" name="direction" value="<%=direction%>" />
 
 </form>
-<%--<form class="form-inline md-form mr-auto mb-4"
-      action="PaginationServlet" method="get">
+<form class="form-inline md-form mr-auto mb-4"
+      action="EmployeePagination" method="get">
     <select class="form-control" id="direction" name="direction">
         <option value="ASC">ascending</option>
         <option value="DESC">descending</option>
@@ -130,7 +130,7 @@
     <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
     <input type="hidden" name="keyword" value="<%=keyword%>" />
 
-</form>--%>
+</form>
 <a class="btn btn-primary" href="EmployeeDisplay.html">Back</a>
 <div class="row col-md-12">
     <table class="table table-striped table-bordered table-sm">
@@ -184,14 +184,14 @@
         <%
             out.println("<li class=\"page-item\">");
             out.println("<a class=\"page-link\" href=\"" + "EmployeePagination?recordsPerPage=" + recordsPerPage
-                    + "&currentPage=1" + "&keyword=" + keyword +"\">First</a>");
+                    + "&currentPage=1" + "&keyword=" + keyword + "&direction=" + direction + "\">First</a>");
             out.println("</li>");
         %>
 
         <li class="page-item">
             <%
                 out.println("<a class=\"page-link\" href=\"" + "EmployeePagination?recordsPerPage=" + recordsPerPage
-                        + "&currentPage=" + (currentPage - 1) + "&keyword=" + "\">Previous</a>");
+                        + "&currentPage=" + (currentPage - 1) + "&keyword=" + keyword + "&direction=" + direction + "\">Previous</a>");
             %>
         </li>
         <%
@@ -201,11 +201,11 @@
             if (currentPage < nOfPages) {
                 out.println("<li class=\"page-item\">");
                 out.println("<a class=\"page-link\" href=\"" + "EmployeePagination?recordsPerPage=" + recordsPerPage
-                        + "&currentPage=" + (currentPage + 1) + "&keyword=" + keyword + "\">Next</a>");
+                        + "&currentPage=" + (currentPage + 1) + "&keyword=" + keyword + "&direction=" + direction + "\">Next</a>");
                 out.println("</li>");
                 out.println("<li class=\"page-item\">");
                 out.println("<a class=\"page-link\" href=\"" + "EmployeePagination?recordsPerPage=" + recordsPerPage
-                        + "&currentPage=" + nOfPages + "&keyword=" + keyword +"\">Last</a>");
+                        + "&currentPage=" + nOfPages + "&keyword=" + keyword + "&direction=" + direction + "\">Last</a>");
                 out.println("</li>");
             }
         %>
@@ -235,12 +235,12 @@
         <h1>Add Employee</h1>
         <fieldset>
             <legend>Add Employee Details:</legend> <br>
-            Last Name: <input type="text" name="fname" /> <br>
-            First Name: <input type="text" name="lname" /> <br>
-            Extension: <input type="text" name="extension" /> <br>
-            Email: <input type="text" name="email" /> <br>
+            First Name: <input type="text" name="fname" maxlength="8" required /> <br>
+            Last Name: <input type="text" name="lname" maxlength="9" required /> <br>
+            Extension: <input type="text" name="extension" maxlength="5" required /> <br>
+            Email: <input type="email" name="email" maxlength="31" required /> <br>
             Office:
-           <select name="officeCode">
+            <select name="officeCode">
                 <%
                     for (Office t : officeList) {
                         out.println("<option value=" + t.getId() + ">" + t.getAddressline1() + "</option>");
@@ -255,7 +255,7 @@
                     }
                 %>
             </select> <br>
-            Job Title: <input type="text" name="jobTitle" /> <br>
+            Job Title: <input type="text" name="jobTitle" maxlength="20" required /> <br>
         </fieldset>
         <button type="submit" class="btn">Submit Test</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>

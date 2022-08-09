@@ -16,5 +16,5 @@ public interface EmployeeSessionBeanLocal {
     public void updateEmployee(String[] s) throws EJBException;
     public void deleteEmployee(String id) throws EJBException;
     public int getNumberOfRows(String keyword) throws EJBException;
-    public List<Employee> readEmployee(int currentPage, int recordsPerPage,String keyword) throws EJBException;
+    public List<Employee> readEmployee(int currentPage, int recordsPerPage,String keyword,String direction) throws EJBException;
 }

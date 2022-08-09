@@ -104,21 +104,21 @@
     int recordsPerPage = (int) request.getAttribute("recordsPerPage");
     int nOfPages = (int) request.getAttribute("nOfPages");
     String keyword = (String) request.getAttribute("keyword");
-    //String direction = (String) request.getAttribute("direction");
+    String direction = (String) request.getAttribute("direction");
 %>
 
-<form class="form-inline md-form mr-auto mb-4" action="EmployeePagination" method="get">
+<form class="form-inline md-form mr-auto mb-4" action="OfficePagination" method="get">
     <input class="form-control mr-sm-2" type="text" aria-label="Search"
            name="keyword" />
     <button class="btn aqua-gradient btn-rounded btn-sm my-0 btn btn-info"
             type="submit">Search</button>
     <input type="hidden" name="currentPage" value="<%=currentPage%>" />
     <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
-    <%--    <input type="hidden" name="direction" value="<%=direction%>" />--%>
+    <input type="hidden" name="direction" value="<%=direction%>" />
 
 </form>
-<%--<form class="form-inline md-form mr-auto mb-4"
-      action="PaginationServlet" method="get">
+<form class="form-inline md-form mr-auto mb-4"
+      action="OfficePagination" method="get">
     <select class="form-control" id="direction" name="direction">
         <option value="ASC">ascending</option>
         <option value="DESC">descending</option>
@@ -129,7 +129,7 @@
     <input type="hidden" name="recordsPerPage" value="<%=recordsPerPage%>" />
     <input type="hidden" name="keyword" value="<%=keyword%>" />
 
-</form>--%>
+</form>
 <a class="btn btn-primary" href="OfficeDisplay.html">Back</a>
 <div class="row col-md-12">
     <table class="table table-striped table-bordered table-sm">
@@ -185,14 +185,14 @@
         <%
             out.println("<li class=\"page-item\">");
             out.println("<a class=\"page-link\" href=\"" + "OfficePagination?recordsPerPage=" + recordsPerPage
-                    + "&currentPage=1" + "&keyword=" + keyword +"\">First</a>");
+                    + "&currentPage=1" + "&keyword=" + keyword + "&direction=" + direction + "\">First</a>");
             out.println("</li>");
         %>
 
         <li class="page-item">
             <%
                 out.println("<a class=\"page-link\" href=\"" + "OfficePagination?recordsPerPage=" + recordsPerPage
-                        + "&currentPage=" + (currentPage - 1) + "&keyword=" + "\">Previous</a>");
+                        + "&currentPage=" + (currentPage - 1) + "&keyword=" + keyword + "&direction=" + direction + "\">Previous</a>");
             %>
         </li>
         <%
@@ -202,11 +202,11 @@
             if (currentPage < nOfPages) {
                 out.println("<li class=\"page-item\">");
                 out.println("<a class=\"page-link\" href=\"" + "OfficePagination?recordsPerPage=" + recordsPerPage
-                        + "&currentPage=" + (currentPage + 1) + "&keyword=" + keyword + "\">Next</a>");
+                        + "&currentPage=" + (currentPage + 1) + "&keyword=" + keyword + "&direction=" + direction + "\">Next</a>");
                 out.println("</li>");
                 out.println("<li class=\"page-item\">");
                 out.println("<a class=\"page-link\" href=\"" + "OfficePagination?recordsPerPage=" + recordsPerPage
-                        + "&currentPage=" + nOfPages + "&keyword=" + keyword +"\">Last</a>");
+                        + "&currentPage=" + nOfPages + "&keyword=" + keyword + "&direction=" + direction + "\">Last</a>");
                 out.println("</li>");
             }
         %>
@@ -231,14 +231,14 @@
         <h1>Add Office</h1>
         <fieldset>
             <legend>Add Office Details:</legend> <br>
-            City: <input type="text" name="city" /> <br>
-            Phone: <input type="text" name="phone" /> <br>
-            Address Line 1: <input type="text" name="addressline1" /> <br>
-            Address Line 2: <input type="text" name="addressline2" /> <br>
-            State: <input type="text" name="state" /> <br>
-            Country: <input type="text" name="country" /> <br>
-            Postal Code: <input type="text" name="postalcode" /> <br>
-            Territory: <input type="text" name="territory" /> <br>
+            City: <input type="text" name="city" maxlength="13" required /> <br>
+            Phone: <input type="text" name="phone" maxlength="16" required /> <br>
+            Address Line 1: <input type="text" name="addressline1" maxlength="24" required /> <br>
+            Address Line 2 (Optional): <input type="text" name="addressline2" maxlength="9" /> <br>
+            State (Optional): <input type="text" name="state" maxlength="10" /> <br>
+            Country: <input type="text" name="country" maxlength="9" required /> <br>
+            Postal Code: <input type="text" name="postalcode" maxlength="8" required /> <br>
+            Territory: <input type="text" name="territory" maxlength="5" required /> <br>
         </fieldset>
         <button type="submit" class="btn">Submit Test</button>
         <button type="button" class="btn cancel" onclick="closeForm()">Close</button>

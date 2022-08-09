@@ -39,10 +39,7 @@
                 <div class="col-md-11">
                     <div class="list-menu">
                         <ul>
-                            <li><a href="employee_home.html">Home</a></li>
-                            <li><a href="#">Products</a></li>
-                            <li><a href="#">Orders</a></li>
-                            <li><a href="#">Customers</a></li>
+                            <li><a href="admin_home.html">Home</a></li>
                             <li><a href="EmployeeDisplay.html">Employees</a></li>
                             <li><a href="OfficeDisplay.html">Offices</a></li>
                         </ul>
@@ -67,15 +64,15 @@
 <form action="OfficePagination">
     <input type="hidden" name="currentPage" value="1">
     <input type="hidden" name="keyword" value="">
-    <!--    <input type="hidden" name="direction" value="ASC">-->
+    <input type="hidden" name="direction" value="ASC">
     <div class="form-group col-md-4">
         <label for="records">Select records per page:</label>
         <select class="form-control" id="records" name="recordsPerPage">
-        <option value="5">5</option>
-        <option value="10">10</option>
-        <option value="15">15</option>
-        <option value="20">20</option>
-    </select>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+        </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>

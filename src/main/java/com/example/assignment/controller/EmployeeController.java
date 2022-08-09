@@ -4,6 +4,7 @@ import com.example.assignment.model.entity.Employee;
 import com.example.assignment.model.entity.Office;
 import com.example.assignment.model.sessionbean.EmployeeSessionBeanLocal;
 import com.example.assignment.model.sessionbean.OfficeSessionBeanLocal;
+import com.example.assignment.utils.AdminLoginValidator;
 
 import javax.ejb.EJB;
 import javax.servlet.RequestDispatcher;
@@ -29,6 +30,7 @@ public class EmployeeController extends HttpServlet {
         String id = request.getParameter("id");
 
         /*try{*/
+        if (AdminLoginValidator.isAdminLogin(request)) {
             Employee emp = empbean.findEmployee(id);
             List<Employee> empList = empbean.getAllEmployees();
 
@@ -43,10 +45,11 @@ public class EmployeeController extends HttpServlet {
 
             RequestDispatcher req = request.getRequestDispatcher("EmployeeUpdate.jsp");
             req.forward(request, response);
-
-        /*}catch (EJBException ex){
-
-        }*/
+        }
+        else{
+            request.setAttribute("login_status", "unsuccessful");
+            request.getRequestDispatcher("Admin_Login").forward(request, response);
+        }
     }
 
     @Override

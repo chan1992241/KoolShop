@@ -33,7 +33,7 @@ public class OfficeSessionBean implements OfficeSessionBeanLocal{
         int officeCode = ((int)(Math.random()*(10000 - 1000))) + 1000;
 
         Query q = em.createNativeQuery("INSERT INTO classicmodels.offices (officecode, city, phone, addressline1, addressline2, state, country, postalcode, territory) VALUES (" +
-                                        officeCode + ", '" + s[1] + "', '" + s[2] + "', '" + s[3] + "', '" + s[4] + "', '" + s[5] + "', '" + s[6] + "', '" + s[7] + "', '" + s[8] + "');");
+                officeCode + ", '" + s[1] + "', '" + s[2] + "', '" + s[3] + "', '" + s[4] + "', '" + s[5] + "', '" + s[6] + "', '" + s[7] + "', '" + s[8] + "');");
         q.executeUpdate();
     }
 
@@ -70,15 +70,15 @@ public class OfficeSessionBean implements OfficeSessionBeanLocal{
         return i;
     }
 
-    public List<Office> readOffice(int currentPage, int recordsPerPage,String keyword) throws EJBException{
+    public List<Office> readOffice(int currentPage, int recordsPerPage,String keyword,String direction) throws EJBException{
         Query q = null;
         int start = 0;
         //direction = " " + direction;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.offices order by officecode", Office.class);
+            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.offices order by officecode " + direction, Office.class);
             start = currentPage * recordsPerPage - recordsPerPage;
         } else {
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.offices WHERE concat(officecode,city,country) LIKE ? order by officecode",Office.class);
+            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.offices WHERE concat(officecode,city,country) LIKE ? order by officecode " + direction, Office.class);
             start = currentPage * recordsPerPage - recordsPerPage;
             q.setParameter(1, "%" + keyword + "%");
         }

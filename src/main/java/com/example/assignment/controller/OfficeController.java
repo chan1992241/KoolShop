@@ -2,6 +2,7 @@ package com.example.assignment.controller;
 
 import com.example.assignment.model.entity.Office;
 import com.example.assignment.model.sessionbean.OfficeSessionBeanLocal;
+import com.example.assignment.utils.AdminLoginValidator;
 
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
@@ -22,19 +23,26 @@ public class OfficeController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String id = request.getParameter("id");
 
-        /*try{*/
-        Office office = officeBean.findOffice(id);
+        if (AdminLoginValidator.isAdminLogin(request)) {
+            String id = request.getParameter("id");
 
-        request.setAttribute("Office", office);
+            /*try{*/
+            Office office = officeBean.findOffice(id);
 
-        RequestDispatcher req = request.getRequestDispatcher("OfficeUpdate.jsp");
-        req.forward(request, response);
+            request.setAttribute("Office", office);
+
+            RequestDispatcher req = request.getRequestDispatcher("OfficeUpdate.jsp");
+            req.forward(request, response);
 
         /*}catch (EJBException ex){
 
         }*/
+        }
+        else{
+            request.setAttribute("login_status", "unsuccessful");
+            request.getRequestDispatcher("Admin_Login").forward(request, response);
+        }
     }
 
     @Override

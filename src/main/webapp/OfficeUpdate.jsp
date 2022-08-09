@@ -46,7 +46,7 @@
             <td>City</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"city\" value=\"" + office.getCity() + "\"");
+                    out.println("<input type=\"text\" name=\"city\" maxlength=\"13\" required value=\"" + office.getCity() + "\"");
                 %>
             </td>
         </tr>
@@ -54,7 +54,7 @@
             <td>Phone</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"phone\" value=\"" + office.getPhone() + "\"");
+                    out.println("<input type=\"text\" name=\"phone\" maxlength=\"16\" required value=\"" + office.getPhone() + "\"");
                 %>
             </td>
         </tr>
@@ -62,23 +62,23 @@
             <td>Address Line 1</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"addressline1\" value=\"" + office.getAddressline1() + "\"");
+                    out.println("<input type=\"text\" name=\"addressline1\" maxlength=\"24\" required value=\"" + office.getAddressline1() + "\"");
                 %>
             </td>
         </tr>
         <tr>
-            <td>Address Line 2</td>
+            <td>Address Line 2 (Optional)</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"addressline2\" value=\"" + office.getAddressline2() + "\"");
+                    out.println("<input type=\"text\" name=\"addressline2\" maxlength=\"9\" value=\"" + office.getAddressline2() + "\"");
                 %>
             </td>
         </tr>
         <tr>
-            <td>State</td>
+            <td>State (Optional)</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"state\" value=\"" + office.getState() + "\"");
+                    out.println("<input type=\"text\" name=\"state\" maxlength=\"10\" value=\"" + office.getState() + "\"");
                 %>
             </td>
         </tr>
@@ -86,7 +86,7 @@
             <td>Country</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"country\" value=\"" + office.getCountry() + "\"");
+                    out.println("<input type=\"text\" name=\"country\" maxlength=\"9\" required value=\"" + office.getCountry() + "\"");
                 %>
             </td>
         </tr>
@@ -94,7 +94,7 @@
             <td>Postal Code</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"postalcode\" value=\"" + office.getPostalcode() + "\"");
+                    out.println("<input type=\"text\" name=\"postalcode\" maxlength=\"8\" required value=\"" + office.getPostalcode() + "\"");
                 %>
             </td>
         </tr>
@@ -102,7 +102,7 @@
             <td>Territory</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"territory\" value=\"" + office.getTerritory() + "\"");
+                    out.println("<input type=\"text\" name=\"territory\" maxlength=\"5\" required value=\"" + office.getTerritory() + "\"");
                 %>
             </td>
         <tr>

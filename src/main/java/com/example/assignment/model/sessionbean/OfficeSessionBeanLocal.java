@@ -14,5 +14,5 @@ public interface OfficeSessionBeanLocal {
     public void updateOffice(String[] s) throws EJBException;
     public void deleteOffice(String id) throws EJBException;
     public int getNumberOfRows(String keyword) throws EJBException;
-    public List<Office> readOffice(int currentPage, int recordsPerPage,String keyword) throws EJBException;
+    public List<Office> readOffice(int currentPage, int recordsPerPage,String keyword,String direction) throws EJBException;
 }

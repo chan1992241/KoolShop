@@ -39,6 +39,8 @@ public class Staff_Login extends HttpServlet {
                 request.setAttribute("staff_login_status", "successful");
             }if (CustomerLoginValidator.isCustomerLogin(request)){
                 request.setAttribute("login_status", "successful");
+            }else {
+                request.setAttribute("login_status", "unsuccessful");
             }
 
             // Pagination attribute

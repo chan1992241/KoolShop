@@ -31,7 +31,7 @@
         <h1>Kool Store</h1>
         <p class="lead"> Welcome to Kool Store! <br> Jump right in and explore our cool vehicle. <br>
             Feel free to find your favourite vehicle here</p>
-        <a href="/campground" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View
+        <a href="/Servlet" class="btn btn-lg btn-secondary font-weight-bold border-white bg-white">View
             vehicle</a>
     </main>
 

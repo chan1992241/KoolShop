@@ -51,7 +51,7 @@
             <td>Last Name</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"lname\" value=\"" + emp.getLastname() + "\"");
+                    out.println("<input type=\"text\" name=\"lname\" maxlength=\"9\" required value=\"" + emp.getLastname() + "\"");
                 %>
             </td>
         </tr>
@@ -59,7 +59,7 @@
             <td>First Name</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"fname\" value=\"" + emp.getFirstname() + "\"");
+                    out.println("<input type=\"text\" name=\"fname\" maxlength=\"8\" required value=\"" + emp.getFirstname() + "\"");
                 %>
             </td>
         </tr>
@@ -67,14 +67,14 @@
             <td>Extension</td>
             <td>
                 <%
-                    out.println("<input type=\"text\" name=\"extension\" value=\"" + emp.getExtension() + "\"");
+                    out.println("<input type=\"text\" name=\"extension\" maxlength=\"5\" required value=\"" + emp.getExtension() + "\"");
                 %>
             </td>
         </tr>
         <tr>
             <td>Email</td>
             <td><%
-                out.println("<input type=\"text\" name=\"email\" value=\"" + emp.getEmail() + "\"");
+                out.println("<input type=\"email\" name=\"email\" maxlength=\"31\" required value=\"" + emp.getEmail() + "\"");
             %>
             </td> </tr>
         <tr>
@@ -104,7 +104,7 @@
         <tr>
             <td>Job Title</td>
             <td><%
-                out.println("<input type=\"text\" name=\"jobTitle\" value=\"" + emp.getJobtitle() + "\"");
+                out.println("<input type=\"text\" name=\"jobTitle\" maxlength=\"20\" required value=\"" + emp.getJobtitle() + "\"");
             %>
             </td> </tr>
         <tr>

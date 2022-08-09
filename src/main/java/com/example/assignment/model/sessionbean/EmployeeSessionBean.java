@@ -64,8 +64,8 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
 
     public void updateEmployee(String[] s) throws EJBException{
         Employee e = findEmployee(s[0]);
-        e.setFirstname(s[1]);
-        e.setLastname(s[2]);
+        e.setLastname(s[1]);
+        e.setFirstname(s[2]);
         e.setExtension(s[3]);
         e.setEmail(s[4]);
 
@@ -97,15 +97,15 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
         return i;
     }
 
-    public List<Employee> readEmployee(int currentPage, int recordsPerPage,String keyword) throws EJBException{
+    public List<Employee> readEmployee(int currentPage, int recordsPerPage,String keyword, String direction) throws EJBException{
         Query q = null;
         int start = 0;
         //direction = " " + direction;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.employees order by employeenumber", Employee.class);
+            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.employees order by employeenumber " + direction, Employee.class);
             start = currentPage * recordsPerPage - recordsPerPage;
         } else {
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.employees WHERE concat(employeenumber,lastname,firstname) LIKE ? order by employeenumber",Employee.class);
+            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.employees WHERE concat(employeenumber,lastname,firstname) LIKE ? order by employeenumber " + direction, Employee.class);
             start = currentPage * recordsPerPage - recordsPerPage;
             q.setParameter(1, "%" + keyword + "%");
         }
