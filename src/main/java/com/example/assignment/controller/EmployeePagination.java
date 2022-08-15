@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 @WebServlet(name = "EmployeePagination", value = "/EmployeePagination")
@@ -28,43 +29,49 @@ public class EmployeePagination extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         if (AdminLoginValidator.isAdminLogin(request)) {
-            int nOfPages = 0;
-            int currentPage = Integer.valueOf(request.getParameter("currentPage"));
-            int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
-            String keyword = request.getParameter("keyword");
-            String direction = request.getParameter("direction");
-            List<Employee> empList = empbean.getAllEmployees();
-            //Office empOffice = officeBean.findOffice(emp.getOfficecode());
-            List<Office> officeList = officeBean.getAllOffices();
+            try {
+                int nOfPages = 0;
+                int currentPage = Integer.valueOf(request.getParameter("currentPage"));
+                int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
+                String keyword = request.getParameter("keyword");
+                String direction = request.getParameter("direction");
+                List<Employee> empList = empbean.getAllEmployees();
+                //Office empOffice = officeBean.findOffice(emp.getOfficecode());
+                List<Office> officeList = officeBean.getAllOffices();
 
-            /*try{*/
-            int rows = empbean.getNumberOfRows(keyword);
-            nOfPages = rows / recordsPerPage;
-            if (rows % recordsPerPage != 0) {
-                nOfPages++;
-            }
+                /*try{*/
+                int rows = empbean.getNumberOfRows(keyword);
+                nOfPages = rows / recordsPerPage;
+                if (rows % recordsPerPage != 0) {
+                    nOfPages++;
+                }
 
-            if (currentPage > nOfPages && nOfPages != 0) {
-                currentPage = nOfPages;
-            }
-            List<Employee> lists = empbean.readEmployee(currentPage, recordsPerPage, keyword, direction);
-            request.setAttribute("EmpPerPage", lists);
+                if (currentPage > nOfPages && nOfPages != 0) {
+                    currentPage = nOfPages;
+                }
+                List<Employee> lists = empbean.readEmployee(currentPage, recordsPerPage, keyword, direction);
+                request.setAttribute("EmpPerPage", lists);
 
         /*}catch (EJBException ex){
 
         }*/
 
-            request.setAttribute("nOfPages", nOfPages);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("recordsPerPage", recordsPerPage);
-            request.setAttribute("keyword", keyword);
-            request.setAttribute("direction", direction);
-            request.setAttribute("EMPList", empList);
-            //request.setAttribute("EmpOffice", empOffice);
-            request.setAttribute("OfficeList", officeList);
+                request.setAttribute("nOfPages", nOfPages);
+                request.setAttribute("currentPage", currentPage);
+                request.setAttribute("recordsPerPage", recordsPerPage);
+                request.setAttribute("keyword", keyword);
+                request.setAttribute("direction", direction);
+                request.setAttribute("EMPList", empList);
+                //request.setAttribute("EmpOffice", empOffice);
+                request.setAttribute("OfficeList", officeList);
 
-            RequestDispatcher req = request.getRequestDispatcher("EmployeePagination.jsp");
-            req.forward(request, response);
+                RequestDispatcher req = request.getRequestDispatcher("EmployeePagination.jsp");
+                req.forward(request, response);
+            }
+            catch (Exception ex){
+                RequestDispatcher req = request.getRequestDispatcher("EmployeeDisplay.html");
+                req.forward(request, response);
+            }
         }
         else{
             request.setAttribute("login_status", "unsuccessful");

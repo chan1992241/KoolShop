@@ -11,6 +11,7 @@ public interface EmployeeSessionBeanLocal {
     public boolean checkStaffNumberwithEmail(String employeenumber, String email);
     public boolean checkEmployeeNumberwithExtension(String employeeNumber, String extension) throws EJBException;
     public List<Employee> getAllEmployees() throws EJBException;
+    public List<Employee> findEmployeeByOffice(String OfficeCode) throws EJBException;
     public Employee findEmployee(String ID) throws EJBException;
     public void addEmployee(String[] s) throws EJBException;
     public void updateEmployee(String[] s) throws EJBException;
