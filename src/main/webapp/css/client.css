@@ -1,0 +1,34 @@
+.text-left{
+    text-align: left;
+}
+.tbl-full{
+    width:100%;
+}
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+table tr td{
+    padding:1%;
+
+}
+
+table tbody{
+    padding-left: 1%;
+    padding-right: 1%;
+
+}
+.btn-primary{
+    background-color:aqua;
+    padding:1%;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+}

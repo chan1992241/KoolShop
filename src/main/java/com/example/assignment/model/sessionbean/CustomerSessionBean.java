@@ -23,4 +23,6 @@ public class CustomerSessionBean implements CustomerSessionBeanLocal{
         }
         return true;
     }
+
+
 }

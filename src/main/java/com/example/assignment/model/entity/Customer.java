@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "customers", schema = "classicmodels")
+@NamedQuery(name = "Customer.findbyId", query = "SELECT c FROM Customer c WHERE c.id = :id")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -151,5 +152,6 @@ public class Customer {
     public void setCreditlimit(BigDecimal creditlimit) {
         this.creditlimit = creditlimit;
     }
+
 
 }

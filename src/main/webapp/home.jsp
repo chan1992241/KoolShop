@@ -62,6 +62,7 @@
                             <li><a href="Servlet">Shop</a></li>
                             <li><a href="Customer_Order">Order</a></li>
                             <li><a href="Staff_Login">Staff Order</a></li>
+
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->

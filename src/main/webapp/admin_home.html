@@ -53,6 +53,7 @@
                             <li><a href="admin_home.html">Home</a></li>
                             <li><a href="EmployeeDisplay.html">Employees</a></li>
                             <li><a href="OfficeDisplay.html">Offices</a></li>
+
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->
@@ -72,7 +73,22 @@
 
 <div class="content-section">
     <div class="container">
-
+        <h2>Select Number of Customer Record Per Page</h2>
+        <form action="CustomerPagination">
+            <input type="hidden" name="currentPage" value="1">
+            <input type="hidden" name="keyword" value="">
+            <input type="hidden" name="direction" value="ASC">
+            <div class="form-group col-md-4">
+                <label for="records">Select records per page:</label> <select
+                    class="form-control" id="records" name="recordsPerPage">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+            </select>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
     </div> <!-- /.container -->
 </div> <!-- /.content-section -->
 
