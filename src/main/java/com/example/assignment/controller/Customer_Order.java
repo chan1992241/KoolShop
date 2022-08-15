@@ -5,6 +5,7 @@ import com.example.assignment.model.entity.Orderdetail;
 import com.example.assignment.model.entity.Product;
 import com.example.assignment.model.sessionbean.OrderSessionBeanLocal;
 import com.example.assignment.utils.CustomerLoginValidator;
+import org.json.JSONObject;
 
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
@@ -14,6 +15,7 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,7 +56,16 @@ public class Customer_Order extends HttpServlet {
             orderbean.deleteProductFromOrder(productCodeDelete, orderID);
             doGet(request, response);
         }
-        if (action.equals("update")){
+        if (action.equals("quickSearch")){
+            List<Object[]> order_details = orderbean.getOrderDetails(orderID);
+            request.setCharacterEncoding("utf8");
+            //response.setCharacterEncoding("utf8");
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            JSONObject obj = new JSONObject();
+            obj.put("data", order_details);
+            out.print(obj);
+        } else if (action.equals("update")){
             List<Object[]> order_details = orderbean.getOrderDetails(orderID);
             for (Object[] order_detail: order_details){
                 Product product = (Product) order_detail[0];
