@@ -63,6 +63,8 @@ public class Customer_Order extends HttpServlet {
             }
             doGet(request, response);
         } else {
+            // Pay
+            String total_amount = request.getParameter("total_amount");
             Order order = orderbean.findOrder(orderID);
             orderbean.updateOrder(order.getId().toString(),
                     order.getOrderdate(),
@@ -71,7 +73,10 @@ public class Customer_Order extends HttpServlet {
                     "In Process",
                     order.getComments(),
                     order.getCustomernumber());
-            doGet(request, response);
+            request.setAttribute("login_status", "unsuccessful");
+            request.setAttribute("total_amount", total_amount);
+            request.getRequestDispatcher("client.jsp").forward(request,response);
+//            doGet(request, response);
         }
     }
 }
