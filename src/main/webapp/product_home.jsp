@@ -1,22 +1,14 @@
-<%@ page import="com.example.assignment.model.entity.Order" %>
 <%--
   Created by IntelliJ IDEA.
-  User: user
-  Date: 16/7/2022
-  Time: 7:32 PM
+  User: GM
+  Date: 17/8/2022
+  Time: 7:49 PM
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<!DOCTYPE html>
-<!--[if lt IE 7]><html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]><html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]><html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html>
 <head>
-    <!--
-    Kool Store Template
-    http://www.templatemo.com/preview/templatemo_428_kool_store
-    -->
+
     <meta charset="utf-8">
     <title>Kool Store</title>
 
@@ -25,29 +17,25 @@
 
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/bootstrap.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="css/normalize.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/animate.css">
     <link rel="stylesheet" href="css/templatemo-misc.css">
     <link rel="stylesheet" href="css/templatemo-style.css">
-
+    <link rel="stylesheet" href="css/product.css">
     <script src="js/vendor/modernizr-2.6.2.min.js"></script>
 
 </head>
 <body>
-<!--[if lt IE 7]>
-<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-<![endif]-->
-
-
 <header class="site-header">
     <div class="main-header">
         <div class="container">
             <div class="row">
                 <div class="col-md-4 col-sm-6 col-xs-8">
                     <div class="logo">
-                        <h1><a href="Servlet">Kool Store</a></h1>
+                        <h1><a href="#">Kool Store</a></h1>
                     </div> <!-- /.logo -->
                 </div> <!-- /.col-md-4 -->
             </div> <!-- /.row -->
@@ -56,7 +44,7 @@
     <div class="main-nav">
         <div class="container">
             <div class="row">
-                <div class="col-md-10">
+                <div class="col-md-11">
                     <div class="list-menu">
                         <ul>
                             <li><a href="Home_Product">Shop</a></li>
@@ -66,12 +54,9 @@
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->
-                <div class="col-md-2">
+                <div class="col-md-1">
                     <div class="list-menu">
-                        <ul style="display: flex">
-                            <% if (!(request.getAttribute("login_status").equals("successful"))) { %>
-                            <li><a href="Admin_Login">Admin Login</a></li>
-                            <% } %>
+                        <ul>
                             <li>
                                 <% if (request.getAttribute("login_status").equals("successful")) { %>
                                 <a href="Customer_Logout">logout</a>
@@ -85,23 +70,44 @@
             </div> <!-- /.row -->
         </div> <!-- /.container -->
     </div> <!-- /.main-nav -->
-</header> <!-- /.site-header -->
+</header>
+<br/><br/>
 
-<div class="content-section">
-    <%--    TODO: Start your part here--%>
-    <div class="container">
-        <%--        <% Order order = (Order) request.getAttribute("firstOrder"); %>--%>
-        <%--        <%= order.getOrderdate() %>--%>
-    </div> <!-- /.container -->
-</div> <!-- /.content-section -->
-
-<%--<script src="js/vendor/jquery-1.10.1.min.js"></script>--%>
-<%--<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.10.1.min.js"><\/script>')</script>--%>
-<%--<script src="js/jquery.easing-1.3.js"></script>--%>
-<%--<script src="js/bootstrap.js"></script>--%>
-<%--<script src="js/plugins.js"></script>--%>
-<%--<script src="js/main.js"></script>--%>
+<!--content-->
+<div class="main-content" style="background-color:#c0a16b">
+    <div class="row">
+        <h1 class="text-center" style="color:black;">Explore All Model</h1>
+    </div>
 
 
+
+
+            <div class="row">
+        <div class="col-lg-6">
+
+            <div class="card">
+                <div class="image">
+                  <a href="SelectProduct.html">  <image src="images/products/PresidentialLimousine.jpg" alt="Submit" width="100%" height="440px"/></a>
+                </div>
+            </div>
+        </div>
+
+                <div class="col-lg-6">
+                    <div class="card">
+                        <div class="image">
+                            <a href="SelectProduct.html">  <image src="images/products/AstonMartindb5.jpg" alt="Submit" width="100%" height="440px"/></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+
+
+</div>
+
+<script src="js/plugins.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

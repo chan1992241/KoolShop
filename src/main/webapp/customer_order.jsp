@@ -63,10 +63,10 @@
                 <div class="col-md-11">
                     <div class="list-menu">
                         <ul>
-                            <li><a href="Servlet">Shop</a></li>
+                            <li><a href="Home_Product">Shop</a></li>
                             <li><a href="Customer_Order">Order</a></li>
                             <li><a href="Staff_Login">Staff Order</a></li>
-                            <li><a href="clientpayment_login">Customer</a></li>
+
                         </ul>
                     </div> <!-- /.list-menu -->
                 </div> <!-- /.col-md-6 -->

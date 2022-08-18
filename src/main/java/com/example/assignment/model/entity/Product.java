@@ -5,6 +5,7 @@ import java.math.BigDecimal;
 
 @Entity
 @Table(name = "products", schema = "classicmodels")
+@NamedQuery(name = "product", query = "SELECT p FROM Product p WHERE p.id = :id")
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
