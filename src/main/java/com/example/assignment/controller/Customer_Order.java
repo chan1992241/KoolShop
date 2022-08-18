@@ -56,7 +56,16 @@ public class Customer_Order extends HttpServlet {
             orderbean.deleteProductFromOrder(productCodeDelete, orderID);
             doGet(request, response);
         }
-        if (action.equals("quickSearch")){
+        if (action.equals("addToOrder")){
+            HttpSession session=request.getSession();
+            String customer_number = (String) session.getAttribute("customer_number");
+            String productID = request.getParameter("productID");
+            String quantity = request.getParameter("quantity");
+            List<Order> order  = orderbean.findOrderByCustomerIDAndStatus(customer_number, "wait");
+            String addToOrder_orderID = order.get(0).getId().toString();
+            orderbean.addProductToOrder(productID, addToOrder_orderID, quantity);
+            doGet(request, response);
+        } else if (action.equals("quickSearch")){
             List<Object[]> order_details = orderbean.getOrderDetails(orderID);
             request.setCharacterEncoding("utf8");
             //response.setCharacterEncoding("utf8");

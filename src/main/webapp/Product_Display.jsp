@@ -213,8 +213,11 @@
                 out.println("<td>" + p.getQuantityinstock() + "</td>");
                 out.println("<td>" + p.getBuyprice() + "</td>");
 
-                out.println("<td><a href=\"CustomerController?id= " + p.getId() + "\">Add</a></td>");
-
+//                out.println("<td><a href=\"CustomerController?id= " + p.getId() + "\">Add</a></td>");
+                out.println("<td><form action='Customer_Order' method='post' class='d-flex'><input type='number' name='quantity'/>" +
+                        "<input type='hidden' name='productID' value='"+
+                        p.getId() +"'/><button class='btn btn-primary' type='submit' name='action' value='addToOrder'>Add</button>" +
+                        "</form></td>");
                 out.println("</tr>");
             }
 

@@ -142,7 +142,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
     public Order findOrder(String orderID){
         Query q = null;
         try{
-            q = em.createQuery("SELECT o FROM Order o WHERE ordernumber = " + orderID);
+            q = em.createQuery("SELECT o FROM Order o WHERE o.id = " + orderID);
         }catch (Exception ex){
             System.out.println(ex);
         }
@@ -173,11 +173,13 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
 
     public void addProductToOrder(String productcode, String ordernumber, String quantityOrder ){
         try{
-            Query productQ = em.createQuery("SELECT p from Product p where p.id = " + productcode);
+            Query productQ = em.createQuery("SELECT p from Product p where p.id = '" + productcode + "'");
             Product product = (Product) productQ.getSingleResult();
-            Query q = em.createNativeQuery("INSERT INTO classicmodels.orderdetails (ordernumber, productcode, quantityordered, priceeach, orderlinenumber) VALUES\n" +
-                    "("+ordernumber+", '"+productcode+"', "+ quantityOrder +", "+ product.getBuyprice()+", 2);");
-            q.executeUpdate();
+            String query = "INSERT INTO classicmodels.orderdetails (ordernumber, productcode, quantityordered, priceeach, orderlinenumber) VALUES ("+ordernumber+", '"+product.getId()+"', "+quantityOrder+", "+ product.getBuyprice() + ", 2);";
+            System.out.println(query);
+            em.createNativeQuery(query).executeUpdate();
+//            Query q = em.createNativeQuery("INSERT INTO classicmodels.orderdetails (ordernumber, productcode, quantityordered, priceeach, orderlinenumber) VALUES (" + ordernumber + ", '" + product.getId() +"', " + quantityOrder +", "+ product.getBuyprice()+", 2);");
+//            q.executeUpdate();
         }catch (Exception ex){
             System.out.println(ex);
         }
