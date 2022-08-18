@@ -106,7 +106,7 @@
     String keyword = (String) request.getAttribute("keyword");
     String direction = (String) request.getAttribute("direction");
 %>
-
+<h2>List of Offices</h2>
 <form class="form-inline md-form mr-auto mb-4" action="OfficePagination" method="get">
     <input class="form-control mr-sm-2" type="text" aria-label="Search"
            name="keyword" />
@@ -145,6 +145,7 @@
             <th>Territory</th>
             <th>Update</th>
             <th>Delete</th>
+            <th>View Employees</th>
         </tr>
         <%
             List<Office> OfficePerPage = (List<Office>) request.getAttribute("OfficePerPage");
@@ -162,6 +163,7 @@
                     out.println("<td>" + t.getTerritory() + "</td>");
                     out.println("<td><a href=\"OfficeController?id=" + t.getId() + "\">Update</a></td>");
                     out.println("<td><a href=\"OfficeController?id=" + t.getId() + "\">Delete</a></td>");
+                    out.println("<td><a href=\"OfficeController?id=" + t.getId() + "&btn=View\">Employees</a></td>");
                     out.println("</tr>");
 
                 }

@@ -23,32 +23,38 @@ public class OfficePagination extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (AdminLoginValidator.isAdminLogin(request)) {
-            int nOfPages = 0;
-            int currentPage = Integer.valueOf(request.getParameter("currentPage"));
-            int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
-            String keyword = request.getParameter("keyword");
-            String direction = request.getParameter("direction");
+            try {
+                int nOfPages = 0;
+                int currentPage = Integer.valueOf(request.getParameter("currentPage"));
+                int recordsPerPage = Integer.valueOf(request.getParameter("recordsPerPage"));
+                String keyword = request.getParameter("keyword");
+                String direction = request.getParameter("direction");
 
-            int rows = officeBean.getNumberOfRows(keyword);
-            nOfPages = rows / recordsPerPage;
-            if (rows % recordsPerPage != 0) {
-                nOfPages++;
+                int rows = officeBean.getNumberOfRows(keyword);
+                nOfPages = rows / recordsPerPage;
+                if (rows % recordsPerPage != 0) {
+                    nOfPages++;
+                }
+
+                if (currentPage > nOfPages && nOfPages != 0) {
+                    currentPage = nOfPages;
+                }
+                List<Office> lists = officeBean.readOffice(currentPage, recordsPerPage, keyword, direction);
+                request.setAttribute("OfficePerPage", lists);
+
+                request.setAttribute("nOfPages", nOfPages);
+                request.setAttribute("currentPage", currentPage);
+                request.setAttribute("recordsPerPage", recordsPerPage);
+                request.setAttribute("keyword", keyword);
+                request.setAttribute("direction", direction);
+
+                RequestDispatcher req = request.getRequestDispatcher("OfficePagination.jsp");
+                req.forward(request, response);
             }
-
-            if (currentPage > nOfPages && nOfPages != 0) {
-                currentPage = nOfPages;
+            catch (Exception ex){
+                RequestDispatcher req = request.getRequestDispatcher("OfficeDisplay.html");
+                req.forward(request, response);
             }
-            List<Office> lists = officeBean.readOffice(currentPage, recordsPerPage, keyword, direction);
-            request.setAttribute("OfficePerPage", lists);
-
-            request.setAttribute("nOfPages", nOfPages);
-            request.setAttribute("currentPage", currentPage);
-            request.setAttribute("recordsPerPage", recordsPerPage);
-            request.setAttribute("keyword", keyword);
-            request.setAttribute("direction", direction);
-
-            RequestDispatcher req = request.getRequestDispatcher("OfficePagination.jsp");
-            req.forward(request, response);
         }
         else{
             request.setAttribute("login_status", "unsuccessful");

@@ -90,6 +90,18 @@
 
 <div class="content-section">
     <div class="container">
+        <form id="quickSearchForm">
+            <div class="input-group mb-3">
+                <button class="btn btn-outline-secondary" type="submit" id="quickSearchBtn">Quick Search</button>
+                <input type="hidden" name="action" value="quickSearch"/>
+                <input type="text" class="form-control" placeholder="Enter Order ID" id="orderID" name="orderID" aria-label="Example text with button addon" aria-describedby="button-addon1">
+            </div>
+        </form>
+        <table class="table" id="order_details">
+
+        </table>
+        <hr/>
+        <h1>My Current Order</h1>
         <div class="d-flex">
             <form action="Customer_Order" method="get">
                 <button type="submit" type="submit" class="btn btn-info mb-3">Current Order</button>
@@ -132,7 +144,7 @@
                                 <td>RM<%= orderdetail.getPriceeach() %></td>
                                 <td><input type="number" step="1" name="<%= product.getId() %>" value="<%= orderdetail.getQuantityordered() %>"/></td>
                                 <td><%= orderdetail.getPriceeach().multiply(new BigDecimal(orderdetail.getQuantityordered())) %></td>
-                                <td><button type="submit" name="deleteProduct" value="<%=product.getId()%>">Delete</button></td>
+                                <td><button type="submit" name="deleteProduct" class="btn btn-primary" value="<%=product.getId()%>">Delete</button></td>
                             </tr>
                         <% } %>
                             <tr>
@@ -156,7 +168,40 @@
 </div> <!-- /.content-section -->
 <script src="js/plugins.js"></script>
 <script src="js/main.js"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $(document).ready(function () {
+        $("#quickSearchBtn").click(function () {
+            let form_data = $("#quickSearchForm").serialize()
+            console.log(form_data)
+            $("#order_details").empty();
+            $.ajax({
+                url: 'Customer_Order',
+                type: 'POST',
+                dataType: 'json',
+                data: form_data,
+                success: function (data) {
+                        if (data === null) {
+                            alert("Invalid employeeid");
+                        } else {
+                            let htmlString = '<thead><tr><th scope="col">Product Name</th><th scope="col">Price Each</th><th scope="col">Quantity</th><th scope="col">Total (RM)</th></tr></thead><tbody>'
+                            let total_payment = 0;
+                            for (let item of data.data){
+                                let current_total = item[1].priceeach * item[1].quantityordered
+                                total_payment += current_total
+                                htmlString += "<tr><td>" + item[0].productname + "</td><td>" + item[1].priceeach + "</td><td>" + item[1].quantityordered+ "</td><td>" + current_total + "</td></tr>"
+                            }
+                            htmlString += '<tr><td></td><td></td><td>Total</td><td>'+total_payment+'</td></tr></tbody>'
+                            $("#order_details").append(htmlString);
+                        }
+                    }, error: function (e) {
+                    alert('Invalid id');
+                }
+            });
+            return false;
+        })
+    })
+</script>
 
 </body>
 </html>

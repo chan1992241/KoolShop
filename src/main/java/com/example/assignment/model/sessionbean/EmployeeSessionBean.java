@@ -47,6 +47,13 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
         return employees;
     }
 
+    public List<Employee> findEmployeeByOffice(String OfficeCode) throws EJBException{
+        int officeCode = Integer.parseInt(OfficeCode);
+        Query q = em.createNativeQuery("select * from ecommerce.classicmodels.employees where officecode = " + officeCode + ";", Employee.class);
+        List<Employee> employees = q.getResultList();
+        return employees;
+    }
+
     public Employee findEmployee(String ID) throws EJBException{
         Query q = em.createNamedQuery("Employee.findbyId");
         q.setParameter("id", Integer.parseInt(ID));

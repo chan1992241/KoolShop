@@ -83,7 +83,7 @@
                 <select name="officeCode">
                     <%
                         for (Office t : officeList) {
-                            out.println("<option value=" + t.getId() + ">" + t.getAddressline1() + "</option>");
+                            out.println("<option value=" + t.getId() + ">" + t.getId() + " | " + t.getCity() + "</option>");
                         }
                     %>
                 </select>

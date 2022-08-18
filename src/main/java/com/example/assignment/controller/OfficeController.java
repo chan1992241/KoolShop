@@ -1,6 +1,8 @@
 package com.example.assignment.controller;
 
+import com.example.assignment.model.entity.Employee;
 import com.example.assignment.model.entity.Office;
+import com.example.assignment.model.sessionbean.EmployeeSessionBeanLocal;
 import com.example.assignment.model.sessionbean.OfficeSessionBeanLocal;
 import com.example.assignment.utils.AdminLoginValidator;
 
@@ -14,12 +16,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 @WebServlet(name = "OfficeController", value = "/OfficeController")
 public class OfficeController extends HttpServlet {
 
     @EJB
     private OfficeSessionBeanLocal officeBean;
+    @EJB
+    private EmployeeSessionBeanLocal empbean;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,17 +32,27 @@ public class OfficeController extends HttpServlet {
         if (AdminLoginValidator.isAdminLogin(request)) {
             String id = request.getParameter("id");
 
-            /*try{*/
-            Office office = officeBean.findOffice(id);
+            try{
+                Office office = officeBean.findOffice(id);
+                List<Employee> empList = empbean.findEmployeeByOffice(id);
 
-            request.setAttribute("Office", office);
+                request.setAttribute("Office", office);
+                request.setAttribute("EMPList", empList);
 
-            RequestDispatcher req = request.getRequestDispatcher("OfficeUpdate.jsp");
-            req.forward(request, response);
+                if (request.getParameter("btn")!=null){
+                    RequestDispatcher req = request.getRequestDispatcher("OfficeEmployee.jsp");
+                    req.forward(request, response);
+                }
+                else {
+                    RequestDispatcher req = request.getRequestDispatcher("OfficeUpdate.jsp");
+                    req.forward(request, response);
+                }
 
-        /*}catch (EJBException ex){
-
-        }*/
+            }
+            catch (Exception ex){
+                RequestDispatcher req = request.getRequestDispatcher("OfficeDisplay.html");
+                req.forward(request, response);
+            }
         }
         else{
             request.setAttribute("login_status", "unsuccessful");

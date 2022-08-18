@@ -31,20 +31,26 @@ public class EmployeeController extends HttpServlet {
 
         /*try{*/
         if (AdminLoginValidator.isAdminLogin(request)) {
-            Employee emp = empbean.findEmployee(id);
-            List<Employee> empList = empbean.getAllEmployees();
+            try {
+                Employee emp = empbean.findEmployee(id);
+                List<Employee> empList = empbean.getAllEmployees();
 
-            //If have problem, remove code below
-            //Office empOffice = officeBean.findOffice(String.valueOf(emp.getOfficecode().getId()));
-            List<Office> officeList = officeBean.getAllOffices();
+                //If have problem, remove code below
+                //Office empOffice = officeBean.findOffice(String.valueOf(emp.getOfficecode().getId()));
+                List<Office> officeList = officeBean.getAllOffices();
 
-            request.setAttribute("EMP", emp);
-            request.setAttribute("EMPList", empList);
-            //request.setAttribute("EmpOffice", empOffice);
-            request.setAttribute("OfficeList", officeList);
+                request.setAttribute("EMP", emp);
+                request.setAttribute("EMPList", empList);
+                //request.setAttribute("EmpOffice", empOffice);
+                request.setAttribute("OfficeList", officeList);
 
-            RequestDispatcher req = request.getRequestDispatcher("EmployeeUpdate.jsp");
-            req.forward(request, response);
+                RequestDispatcher req = request.getRequestDispatcher("EmployeeUpdate.jsp");
+                req.forward(request, response);
+            }
+            catch (Exception ex){
+                RequestDispatcher req = request.getRequestDispatcher("EmployeeDisplay.html");
+                req.forward(request, response);
+            }
         }
         else{
             request.setAttribute("login_status", "unsuccessful");
@@ -67,19 +73,19 @@ public class EmployeeController extends HttpServlet {
         String[] empData = {eid, lname, fname, extension, email, officeCode, reportsTo, jobTitle};
 
         /*try {*/
-            if (request.getParameter("UPDATE")!=null&&request.getParameter("UPDATE").equals("UPDATE")) {
-                empbean.updateEmployee(empData);
-            }
-            else if (request.getParameter("DELETE") != null && request.getParameter("DELETE").equals("DELETE")) {
-                empbean.deleteEmployee(eid);
-            }
-            else {
-                empbean.addEmployee(empData);
-            }
-            out.println("<SCRIPT type=\"text/javascript\">");
-            out.println("alert(\"Record has been updated and url will be redirected\")");
-            out.println("window.location.assign(\"EmployeePagination?currentPage=1&recordsPerPage=20&keyword=&direction=ASC\")");
-            out.println("</SCRIPT>");
+        if (request.getParameter("UPDATE")!=null&&request.getParameter("UPDATE").equals("UPDATE")) {
+            empbean.updateEmployee(empData);
+        }
+        else if (request.getParameter("DELETE") != null && request.getParameter("DELETE").equals("DELETE")) {
+            empbean.deleteEmployee(eid);
+        }
+        else {
+            empbean.addEmployee(empData);
+        }
+        out.println("<SCRIPT type=\"text/javascript\">");
+        out.println("alert(\"Record has been updated and url will be redirected\")");
+        out.println("window.location.assign(\"EmployeePagination?currentPage=1&recordsPerPage=20&keyword=&direction=ASC\")");
+        out.println("</SCRIPT>");
         /*} catch (EJBException ex) {
         }*/
     }

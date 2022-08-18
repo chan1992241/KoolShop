@@ -107,7 +107,7 @@
     String keyword = (String) request.getAttribute("keyword");
     String direction = (String) request.getAttribute("direction");
 %>
-
+<h2>List of Employees</h2>
 <form class="form-inline md-form mr-auto mb-4" action="EmployeePagination" method="get">
     <input class="form-control mr-sm-2" type="text" aria-label="Search"
            name="keyword" />
@@ -140,7 +140,7 @@
             <th>First Name</th>
             <th>Extension</th>
             <th>Email</th>
-            <%--<th>Office Address</th>--%>
+            <th>Office Code</th>
             <th>Reports To</th>
             <th>Job Title</th>
             <th>Update</th>
@@ -156,7 +156,7 @@
                     out.println("<td>" + t.getFirstname() + "</td>");
                     out.println("<td>" + t.getExtension() + "</td>");
                     out.println("<td>" + t.getEmail() + "</td>");
-                    //out.println("<td>" + t.getOfficecode().getAddressline1() + "</td>");
+                    out.println("<td>" + t.getOfficecode().getId() + "</td>");
                     out.println("<td>" + t.getReportsto() + "</td>");
                     out.println("<td>" + t.getJobtitle() + "</td>");
                     out.println("<td><a href=\"EmployeeController?id=" + t.getId() + "\">Update</a></td>");
@@ -243,7 +243,7 @@
             <select name="officeCode">
                 <%
                     for (Office t : officeList) {
-                        out.println("<option value=" + t.getId() + ">" + t.getAddressline1() + "</option>");
+                        out.println("<option value=" + t.getId() + ">" + t.getId() + " | " + t.getCity() + "</option>");
                     }
                 %>
             </select> <br>
