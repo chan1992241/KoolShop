@@ -16,7 +16,7 @@ public class OfficeSessionBean implements OfficeSessionBeanLocal{
     EntityManager em;
 
     public List<Office> getAllOffices() throws EJBException{
-        Query q = em.createNativeQuery("select * from ecommerce.classicmodels.offices;", Office.class);
+        Query q = em.createNativeQuery("select * from classicmodels.offices;", Office.class);
         List<Office> offices = q.getResultList();
         return offices;
     }
@@ -59,10 +59,10 @@ public class OfficeSessionBean implements OfficeSessionBeanLocal{
     public int getNumberOfRows(String keyword) throws EJBException{
         Query q = null;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.offices");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM classicmodels.offices");
         }
         else {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from ecommerce.classicmodels.offices WHERE concat(officecode,city,country) LIKE ?");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from classicmodels.offices WHERE concat(officecode,city,country) LIKE ?");
             q.setParameter(1, "%" + keyword + "%");
         }
         BigInteger results = (BigInteger) q.getSingleResult();
@@ -75,10 +75,10 @@ public class OfficeSessionBean implements OfficeSessionBeanLocal{
         int start = 0;
         //direction = " " + direction;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.offices order by officecode " + direction, Office.class);
+            q = em.createNativeQuery("SELECT * FROM classicmodels.offices order by officecode " + direction, Office.class);
             start = currentPage * recordsPerPage - recordsPerPage;
         } else {
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.offices WHERE concat(officecode,city,country) LIKE ? order by officecode " + direction, Office.class);
+            q = em.createNativeQuery("SELECT * from classicmodels.offices WHERE concat(officecode,city,country) LIKE ? order by officecode " + direction, Office.class);
             start = currentPage * recordsPerPage - recordsPerPage;
             q.setParameter(1, "%" + keyword + "%");
         }

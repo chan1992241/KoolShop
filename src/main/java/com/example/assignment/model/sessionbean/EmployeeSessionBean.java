@@ -20,7 +20,7 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
     private OfficeSessionBeanLocal officeBean;
     @Override
     public boolean checkStaffNumberwithEmail(String employeenumber, String email) throws EJBException {
-        Query query = em.createNativeQuery("select * from ecommerce.classicmodels.employees where employeenumber = " + employeenumber +
+        Query query = em.createNativeQuery("select * from classicmodels.employees where employeenumber = " + employeenumber +
                 " and email = '"+ email+"';");
         int numberOfRow = query.getResultList().size();
         if (numberOfRow < 1){
@@ -42,14 +42,14 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
 
     public List<Employee> getAllEmployees() throws EJBException {
         //Execute the query named "Employee.findAll" and return the results. The query is at Employee entity class
-        Query q = em.createNativeQuery("select * from ecommerce.classicmodels.employees;", Employee.class);
+        Query q = em.createNativeQuery("select * from classicmodels.employees;", Employee.class);
         List<Employee> employees = q.getResultList();
         return employees;
     }
 
     public List<Employee> findEmployeeByOffice(String OfficeCode) throws EJBException{
         int officeCode = Integer.parseInt(OfficeCode);
-        Query q = em.createNativeQuery("select * from ecommerce.classicmodels.employees where officecode = " + officeCode + ";", Employee.class);
+        Query q = em.createNativeQuery("select * from classicmodels.employees where officecode = " + officeCode + ";", Employee.class);
         List<Employee> employees = q.getResultList();
         return employees;
     }
@@ -93,10 +93,10 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
     public int getNumberOfRows(String keyword) throws EJBException{
         Query q = null;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.employees");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM classicmodels.employees");
         }
         else {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from ecommerce.classicmodels.employees WHERE concat(employeenumber,lastname,firstname) LIKE ?");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from classicmodels.employees WHERE concat(employeenumber,lastname,firstname) LIKE ?");
             q.setParameter(1, "%" + keyword + "%");
         }
         BigInteger results = (BigInteger) q.getSingleResult();
@@ -109,10 +109,10 @@ public class EmployeeSessionBean implements EmployeeSessionBeanLocal{
         int start = 0;
         //direction = " " + direction;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.employees order by employeenumber " + direction, Employee.class);
+            q = em.createNativeQuery("SELECT * FROM classicmodels.employees order by employeenumber " + direction, Employee.class);
             start = currentPage * recordsPerPage - recordsPerPage;
         } else {
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.employees WHERE concat(employeenumber,lastname,firstname) LIKE ? order by employeenumber " + direction, Employee.class);
+            q = em.createNativeQuery("SELECT * from classicmodels.employees WHERE concat(employeenumber,lastname,firstname) LIKE ? order by employeenumber " + direction, Employee.class);
             start = currentPage * recordsPerPage - recordsPerPage;
             q.setParameter(1, "%" + keyword + "%");
         }

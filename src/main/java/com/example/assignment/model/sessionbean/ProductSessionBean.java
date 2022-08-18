@@ -33,7 +33,7 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     public List<Product> getAllProduct() throws EJBException {
 
         try {
-            Query q = em.createNativeQuery("select * from ecommerce.classicmodels.products;" , Product.class);
+            Query q = em.createNativeQuery("select * from classicmodels.products;" , Product.class);
             List<Product> products = q.getResultList();
 
             return products;
@@ -49,10 +49,10 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
     public int getNumberOfRows(String keyword) throws EJBException {
         Query q = null;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.products");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM classicmodels.products");
         }
         else {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from ecommerce.classicmodels.products WHERE concat(productname,productdescription,quantityinstock,buyprice) LIKE ?");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from classicmodels.products WHERE concat(productname,productdescription,quantityinstock,buyprice) LIKE ?");
             q.setParameter(1, "%" + keyword + "%");
         }
         BigInteger results = (BigInteger) q.getSingleResult();
@@ -74,10 +74,10 @@ public class ProductSessionBean implements ProductSessionBeanLocal {
         int start = 0;
         //direction = " " + direction;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.products order by productname " + direction, Product.class);
+            q = em.createNativeQuery("SELECT * FROM classicmodels.products order by productname " + direction, Product.class);
             start = currentPage * recordsPerPage - recordsPerPage;
         } else {
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.customers WHERE concat(productname,productdescription,buyprice) LIKE ? order by customernumber " + direction, Customer.class);
+            q = em.createNativeQuery("SELECT * from classicmodels.customers WHERE concat(productname,productdescription,buyprice) LIKE ? order by customernumber " + direction, Customer.class);
             start = currentPage * recordsPerPage - recordsPerPage;
             q.setParameter(1, "%" + keyword + "%");
         }

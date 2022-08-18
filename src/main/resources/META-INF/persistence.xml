@@ -4,7 +4,7 @@
              xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd"
              version="2.2">
     <persistence-unit name="default">
-        <jta-data-source>java:/ecommerce</jta-data-source>
+        <jta-data-source>java:/classicmodels</jta-data-source>
         <class>com.example.assignment.model.entity.Customer</class>
         <class>com.example.assignment.model.entity.Employee</class>
         <class>com.example.assignment.model.entity.Office</class>
@@ -17,7 +17,7 @@
         <class>com.example.assignment.model.entity.Productline</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:3306/ecommerce"/>
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/classicmodels"/>
             <property name="javax.persistence.jdbc.user" value="postgres"/>
             <property name="javax.persistence.jdbc.password" value="jinyeeU"/>
 <!--            <property name="eclipselink.logging.level" value="SEVERE"/>-->

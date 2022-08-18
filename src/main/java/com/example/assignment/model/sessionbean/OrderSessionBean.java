@@ -21,7 +21,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
 
     @Override
     public List<Order> getAllOrder() throws EJBException {
-        Query q = em.createNativeQuery("select * from ecommerce.classicmodels.orders;", Order.class);
+        Query q = em.createNativeQuery("select * from classicmodels.orders;", Order.class);
         List<Order> results = q.getResultList();
         return results;
     }
@@ -47,9 +47,9 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
         direction = " " + direction;
         try{
             if (keyword.isEmpty()) {
-                q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number + " order by ordernumber " + direction , Order.class);
+                q = em.createNativeQuery("SELECT * FROM classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number + " order by ordernumber " + direction , Order.class);
             }else{
-                q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.orders WHERE status != 'wait' AND concat(ordernumber,orderdate,requireddate,shippeddate,status) LIKE '%" + keyword + "%' AND customernumber = " + customer_number + " order by ordernumber " + direction,Order.class);
+                q = em.createNativeQuery("SELECT * from classicmodels.orders WHERE status != 'wait' AND concat(ordernumber,orderdate,requireddate,shippeddate,status) LIKE '%" + keyword + "%' AND customernumber = " + customer_number + " order by ordernumber " + direction,Order.class);
 //            q.setParameter(1, "%" + keyword + "%");
             }
         }catch (Exception ex){
@@ -90,9 +90,9 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
         Query q = null;
 //        q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.orders WHERE customernumber = " + customer_number);
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number);
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number);
         } else {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from ecommerce.classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number + " AND concat(ordernumber,orderdate,requireddate,shippeddate,status) LIKE '%" + keyword + "%'");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from classicmodels.orders WHERE status != 'wait' AND customernumber = " + customer_number + " AND concat(ordernumber,orderdate,requireddate,shippeddate,status) LIKE '%" + keyword + "%'");
 //            q.setParameter(1, "%" + keyword + "%");
         }
         BigInteger results = (BigInteger) q.getSingleResult();
@@ -104,7 +104,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
         String orderID;
         try {
             int newOrderID = getLargestID() + 1;
-            String query = "INSERT INTO ecommerce.classicmodels.orders (ordernumber ,orderdate, requireddate, shippeddate, status, comments, customernumber) \n" +
+            String query = "INSERT INTO classicmodels.orders (ordernumber ,orderdate, requireddate, shippeddate, status, comments, customernumber) \n" +
             "VALUES ("+newOrderID+" ,'empty', 'empty', 'empty', 'wait', '', "+customer_number+");";
             em.createNativeQuery(query).executeUpdate();
         }catch (Exception e){
@@ -116,7 +116,7 @@ public class OrderSessionBean implements OrderSessionBeanLocal{
     public int getLargestID(){
         int i = 0;
         try{
-            Query q = em.createNativeQuery("SELECT max(ordernumber) FROM ecommerce.classicmodels.orders;");
+            Query q = em.createNativeQuery("SELECT max(ordernumber) FROM classicmodels.orders;");
             Integer results = (Integer) q.getSingleResult();
             i = results;
         }catch (Exception e){

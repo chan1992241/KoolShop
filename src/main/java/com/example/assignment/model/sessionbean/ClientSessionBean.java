@@ -18,7 +18,7 @@ public class ClientSessionBean implements ClientSessionBeanLocal{
     @Override
     public List<Customer> getAllCustomer() throws EJBException {
         try {
-            Query q = em.createNativeQuery("select * from ecommerce.classicmodels.customers;" , Customer.class);
+            Query q = em.createNativeQuery("select * from classicmodels.customers;" , Customer.class);
             List<Customer> customer = q.getResultList();
             return customer;
         }
@@ -34,10 +34,10 @@ public class ClientSessionBean implements ClientSessionBeanLocal{
         int start = 0;
         //direction = " " + direction;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT * FROM ecommerce.classicmodels.customers order by customername " + direction, Customer.class);
+            q = em.createNativeQuery("SELECT * FROM classicmodels.customers order by customername " + direction, Customer.class);
             start = currentPage * recordsPerPage - recordsPerPage;
         } else {
-            q = em.createNativeQuery("SELECT * from ecommerce.classicmodels.customers WHERE concat(customername,contactlastname,contactfirstname) LIKE ? order by customernumber " + direction, Customer.class);
+            q = em.createNativeQuery("SELECT * from classicmodels.customers WHERE concat(customername,contactlastname,contactfirstname) LIKE ? order by customernumber " + direction, Customer.class);
             start = currentPage * recordsPerPage - recordsPerPage;
             q.setParameter(1, "%" + keyword + "%");
         }
@@ -51,10 +51,10 @@ public class ClientSessionBean implements ClientSessionBeanLocal{
     public int getNumberOfRows(String keyword) throws EJBException {
         Query q = null;
         if (keyword.isEmpty()) {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM ecommerce.classicmodels.customers");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow FROM classicmodels.customers");
         }
         else {
-            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from ecommerce.classicmodels.customers WHERE concat(customernumber,contactlastname,contactfirstname) LIKE ?");
+            q = em.createNativeQuery("SELECT COUNT(*) AS totalrow from classicmodels.customers WHERE concat(customernumber,contactlastname,contactfirstname) LIKE ?");
             q.setParameter(1, "%" + keyword + "%");
         }
         BigInteger results = (BigInteger) q.getSingleResult();
